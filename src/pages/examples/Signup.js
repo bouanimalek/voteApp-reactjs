@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import AuthService from "../../services/auth.services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -53,14 +53,7 @@ export default (props) => {
   const handleRegister = () => {
     const isValid = validate();
     if (isValid) {
-      axios({
-        method: "post",
-        url: `http://localhost:4000/register`,
-        data: {
-          email: email,
-          password: password,
-        },
-      })
+      AuthService.register({ email, password })
         .then((response) => {
           props.history.push("/sign-in");
         })

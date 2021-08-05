@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import AuthService from "../../services/auth.services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -36,14 +36,7 @@ export default (props) => {
     setPassword(e.target.value);
   };
   const handleLogin = () => {
-    axios({
-      method: "post",
-      url: `http://localhost:4000/login`,
-      data: {
-        email: email,
-        password: password,
-      },
-    })
+    AuthService.login({ email, password })
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         props.history.push("/dashboard/overview");

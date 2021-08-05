@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import AuthService from "../../services/auth.services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -23,11 +23,7 @@ export default () => {
   };
 
   const handleResetPassword = () => {
-    axios({
-      method: "post",
-      url: `http://localhost:4000/forgotPassword`,
-      data: { email: email },
-    })
+    AuthService.forgotPassword({ email })
       .then((response) => {})
       .catch((error) => {
         console.log(error);

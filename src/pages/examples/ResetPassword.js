@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import AuthService from "../../services/auth.services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -42,11 +42,7 @@ export default (props) => {
     const validFun = isValid();
     console.log(validFun);
     if (validFun) {
-      axios({
-        method: "post",
-        url: `http://localhost:4000/reset-password/${props.match.params.token}`,
-        data: { password: password },
-      })
+      AuthService.resetPassword({ password, token: props.match.params.token })
         .then((response) => {
           props.history.push("/sign-in");
         })
