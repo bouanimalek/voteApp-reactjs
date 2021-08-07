@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../../services/auth.services";
+import TicketService from "../../services/ticket.services";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,12 +31,15 @@ import BgImage from "../../assets/img/illustrations/signin.svg";
 export default (props) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
   const handleLogin = () => {
     AuthService.login({ email, password })
       .then((response) => {
