@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../../services/auth.services";
-import TicketService from "../../services/ticket.services";
+import { toast } from "react-toastify";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,6 +31,8 @@ import BgImage from "../../assets/img/illustrations/signin.svg";
 export default (props) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [emailRequired, setEmailRequired] = useState(null);
+  const [passwordRequired, setPasswordRequired] = useState(null);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -40,15 +42,36 @@ export default (props) => {
     setPassword(e.target.value);
   };
 
+  const isValid = () => {
+    if (!email) {
+      setEmailRequired("Email is required!");
+      setPasswordRequired(null);
+      return false;
+    } else if (!password) {
+      setPasswordRequired("Password is required!");
+      setEmailRequired(null);
+      return false;
+    } else {
+      setEmailRequired(null);
+      setPasswordRequired(null);
+      return true;
+    }
+  };
+
   const handleLogin = () => {
-    AuthService.login({ email, password })
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        props.history.push("/dashboard/overview");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const isValidate = isValid();
+    if (isValidate) {
+      AuthService.login({ email, password })
+        .then((response) => {
+          toast.success(response.data.message);
+          localStorage.setItem("token", response.data.token);
+          props.history.push("/dashboard/overview");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    }
   };
   return (
     <main>
@@ -80,6 +103,9 @@ export default (props) => {
                         placeholder="example@company.com"
                         onChange={handleEmailChange}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {emailRequired}
+                      </div>
                     </InputGroup>
                   </Form.Group>
                   <Form.Group>
@@ -95,6 +121,9 @@ export default (props) => {
                           placeholder="Password"
                           onChange={handlePasswordChange}
                         />
+                        <div className="text-start w-100 invalid-feedback d-block">
+                          {passwordRequired}
+                        </div>
                       </InputGroup>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
@@ -125,7 +154,6 @@ export default (props) => {
                     Sign in
                   </Button>
                 </Form>
-
                 <div className="mt-3 mb-4 text-center">
                   <span className="fw-normal">or login with</span>
                 </div>

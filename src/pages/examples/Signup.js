@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../../services/auth.services";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -30,7 +31,10 @@ export default (props) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
+  const [emailRequired, setEmailRequired] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
+  const [passwordRequired, setPasswordRequired] = useState(null);
+  const [confirmPasswordRequired, setConfirmPasswordRequired] = useState(null);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -42,8 +46,17 @@ export default (props) => {
     setConfirmPassword(e.target.value);
   };
   const validate = () => {
-    if (password != confirmPassword) {
+    if (!email) {
+      setEmailRequired("Email is required!");
+    } else if (!password) {
+      setPasswordRequired("Password is required!");
+      setEmailRequired(null);
+    } else if (!confirmPassword) {
+      setConfirmPasswordRequired("Confirm Password is required!");
+      setPasswordRequired(null);
+    } else if (password != confirmPassword) {
       setPasswordError("Password doesnt match!");
+      setConfirmPasswordRequired(null);
       return false;
     } else {
       setPasswordError(null);
@@ -52,13 +65,16 @@ export default (props) => {
   };
   const handleRegister = () => {
     const isValid = validate();
+    console.log(isValid);
     if (isValid) {
       AuthService.register({ email, password })
         .then((response) => {
+          toast.success(response.data.message);
           props.history.push("/sign-in");
         })
         .catch((error) => {
           console.log(error);
+          toast.error(error.response.data.message);
         });
     }
   };
@@ -92,6 +108,9 @@ export default (props) => {
                         placeholder="example@company.com"
                         onChange={handleEmailChange}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {emailRequired}
+                      </div>
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="password" className="mb-4">
@@ -106,6 +125,9 @@ export default (props) => {
                         placeholder="Password"
                         onChange={handlePasswordChange}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {passwordRequired}
+                      </div>
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="confirmPassword" className="mb-4">
@@ -122,6 +144,7 @@ export default (props) => {
                       />
                       <div className="text-start w-100 invalid-feedback d-block">
                         {passwordError}
+                        {confirmPasswordRequired}
                       </div>
                     </InputGroup>
                   </Form.Group>

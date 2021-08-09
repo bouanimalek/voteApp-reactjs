@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../../services/auth.services";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -23,6 +24,8 @@ export default (props) => {
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
+  const [passwordRequired, setPasswordRequired] = useState(null);
+  const [confirmPasswordRequired, setConfirmPasswordRequired] = useState(null);
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -30,10 +33,19 @@ export default (props) => {
     setConfirmPassword(e.target.value);
   };
   const isValid = () => {
-    if (password != confirmPassword) {
+    if (!password) {
+      setPasswordRequired("password is required!");
+      setConfirmPasswordRequired(null);
+    } else if (!confirmPassword) {
+      setConfirmPasswordRequired("confirm password is required!");
+      setPasswordError(null);
+    } else if (password !== confirmPassword) {
       setPasswordError("Password doesnt match!");
+      setPasswordRequired(null);
+      setConfirmPasswordRequired(null);
       return false;
     } else {
+      setPasswordRequired(null);
       setPasswordError(null);
       return true;
     }
@@ -42,12 +54,15 @@ export default (props) => {
     const validFun = isValid();
     console.log(validFun);
     if (validFun) {
+      //console.log(props.match.params.token);
       AuthService.resetPassword({ password, token: props.match.params.token })
         .then((response) => {
+          toast.success(response.data.message);
           props.history.push("/sign-in");
         })
         .catch((error) => {
           console.log(error);
+          toast.error(error.response.data.message);
         });
     }
   };
@@ -85,6 +100,9 @@ export default (props) => {
                         placeholder="Password"
                         onChange={handlePasswordChange}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {passwordRequired}
+                      </div>
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="confirmPassword" className="mb-4">
@@ -101,6 +119,7 @@ export default (props) => {
                       />
                       <div className="text-start w-100 invalid-feedback d-block">
                         {passwordError}
+                        {confirmPasswordRequired}
                       </div>
                     </InputGroup>
                   </Form.Group>

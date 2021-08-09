@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../../services/auth.services";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -16,18 +17,37 @@ import { Link } from "react-router-dom";
 import { Routes } from "../../routes";
 import { getMultiValue } from "chartist";
 
-export default () => {
+export default (props) => {
   const [email, setEmail] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
+  const isValid = () => {
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else {
+      setEmailError(null);
+      return true;
+    }
+  };
+
   const handleResetPassword = () => {
-    AuthService.forgotPassword({ email })
-      .then((response) => {})
-      .catch((error) => {
-        console.log(error);
-      });
+    const isValidate = isValid();
+    if (isValidate) {
+      AuthService.forgotPassword({ email })
+        .then((response) => {
+          toast.success(response.data.message);
+          props.history.push("/sign-in");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    }
   };
   return (
     <main>
@@ -65,6 +85,9 @@ export default () => {
                         placeholder="john@company.com"
                         onChange={handleEmailChange}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {emailError}
+                      </div>
                     </InputGroup>
                   </div>
                   <Button
