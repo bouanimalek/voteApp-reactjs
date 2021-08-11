@@ -48,6 +48,7 @@ import Tables from "./components/Tables";
 import Tabs from "./components/Tabs";
 import Tooltips from "./components/Tooltips";
 import Toasts from "./components/Toasts";
+import AddEvent from "./examples/AddEvent";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -157,6 +158,7 @@ export default () => (
       component={Transactions}
     />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
+    <RouteWithSidebar exact path={Routes.AddEvent.path} component={AddEvent} />
     <RouteWithSidebar
       exact
       path={Routes.BootstrapTables.path}

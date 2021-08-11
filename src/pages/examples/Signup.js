@@ -46,22 +46,31 @@ export default (props) => {
     setConfirmPassword(e.target.value);
   };
   const validate = () => {
+    let isValidForm = false;
     if (!email) {
       setEmailRequired("Email is required!");
-    } else if (!password) {
-      setPasswordRequired("Password is required!");
+    } else {
       setEmailRequired(null);
-    } else if (!confirmPassword) {
-      setConfirmPasswordRequired("Confirm Password is required!");
+    }
+    if (!password) {
+      setPasswordRequired("Password is required!");
+    } else {
       setPasswordRequired(null);
-    } else if (password != confirmPassword) {
-      setPasswordError("Password doesnt match!");
+    }
+    if (!confirmPassword) {
+      setConfirmPasswordRequired("Confirm Password is required!");
+    } else {
       setConfirmPasswordRequired(null);
-      return false;
+    }
+    if (password != confirmPassword) {
+      setPasswordError("Password doesnt match!");
     } else {
       setPasswordError(null);
-      return true;
     }
+    if (email && password && confirmPassword && password === confirmPassword) {
+      isValidForm = true;
+    }
+    return isValidForm;
   };
   const handleRegister = () => {
     const isValid = validate();

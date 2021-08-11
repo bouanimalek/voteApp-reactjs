@@ -55,7 +55,7 @@ export default (props) => {
     console.log(validFun);
     if (validFun) {
       //console.log(props.match.params.token);
-      AuthService.resetPassword({ password, token: props.match.params.token })
+      AuthService.resetPassword({ password }, props.match.params.token)
         .then((response) => {
           toast.success(response.data.message);
           props.history.push("/sign-in");
