@@ -64,7 +64,10 @@ export default (props) => {
     setLastName(e.target.value);
   };
   const handleReset = () => {
-    UserService.modifyUser({ user }, idUser)
+    const userData = new FormData();
+    userData.append("firstname", firstName);
+    userData.append("lastname", lastName);
+    UserService.modifyUser(userData, idUser)
       .then((response) => {
         console.log(response);
       })
@@ -107,10 +110,7 @@ export default (props) => {
                       value={user ? user.lastname : ""}
                       onChange={handleLastName}
                     />
-                    <div className="text-start w-100 invalid-feedback d-block">
-                      {}
-                      {}
-                    </div>
+                    <div className="text-start w-100 invalid-feedback d-block"></div>
                   </InputGroup>
                 </Form.Group>
                 <Form.Group id="role" className="mb-4">
