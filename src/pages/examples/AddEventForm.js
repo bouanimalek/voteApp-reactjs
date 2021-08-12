@@ -24,7 +24,7 @@ export const AddEventForm = () => {
   const [image, setImage] = useState("");
   const [address, setAddress] = useState("");
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState("");
+  const [endDate, setEndDate] = useState(new Date());
 
   const startDateTime = new Date(startDate.valueOf()).toLocaleDateString(
     "fr-CA",
@@ -32,12 +32,16 @@ export const AddEventForm = () => {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
+      // hour: "numeric",
+      // minute: "numeric",
     }
   );
   const endDateTime = new Date(endDate.valueOf()).toLocaleDateString("fr-CA", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
+    // hour: "numeric",
+    // minute: "numeric",
   });
 
   const data = new FormData();
@@ -54,6 +58,7 @@ export const AddEventForm = () => {
     EventService.createEvent(data)
       .then((response) => {
         console.log(response.data);
+        console.log({ startDate, endDate });
         toast.success("Event created successfully!");
       })
       .catch((error) => {
@@ -98,6 +103,12 @@ export const AddEventForm = () => {
                 <Form.Label>Start Date</Form.Label>
                 <Datetime
                   timeFormat={false}
+                  timeFormat="HH:mm"
+                  viewMode="time"
+                  timeConstraints={{
+                    hours: { min: 0, max: 23 },
+                    minutes: { step: 1 },
+                  }}
                   onChange={setStartDate}
                   renderInput={(props, openCalendar) => (
                     <InputGroup>
@@ -126,6 +137,12 @@ export const AddEventForm = () => {
                 <Form.Label>End Date</Form.Label>
                 <Datetime
                   timeFormat={false}
+                  timeFormat="HH:mm"
+                  viewMode="time"
+                  timeConstraints={{
+                    hours: { min: 0, max: 23 },
+                    minutes: { step: 1 },
+                  }}
                   onChange={setEndDate}
                   renderInput={(props, openCalendar) => (
                     <InputGroup>
