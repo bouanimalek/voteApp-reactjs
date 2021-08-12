@@ -26,6 +26,8 @@ export default (props) => {
   const [passwordError, setPasswordError] = useState(null);
   const [passwordRequired, setPasswordRequired] = useState(null);
   const [confirmPasswordRequired, setConfirmPasswordRequired] = useState(null);
+  const { token } = useParams();
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -54,8 +56,8 @@ export default (props) => {
     const validFun = isValid();
     console.log(validFun);
     if (validFun) {
-      //console.log(props.match.params.token);
-      AuthService.resetPassword({ password }, props.match.params.token)
+      console.log(token);
+      AuthService.resetPassword({ password }, token)
         .then((response) => {
           toast.success(response.data.message);
           props.history.push("/sign-in");
