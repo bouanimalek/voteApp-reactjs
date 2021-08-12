@@ -1,5 +1,6 @@
 import axios from "axios";
 import authHeader from "./auth-header";
+import jwt_decode from "jwt-decode";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -76,6 +77,18 @@ const getAllUsersWithAllEvents = () => {
   });
 };
 
+//
+const getAuthenticatedUserId = () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const decoded = jwt_decode(token);
+    console.log(decoded);
+    return decoded.userId;
+  } else {
+    return null;
+  }
+};
+
 export default {
   getAllUsers,
   getUserById,
@@ -85,4 +98,5 @@ export default {
   desAffectEventFromUser,
   getUserWithAllEvents,
   getAllUsersWithAllEvents,
+  getAuthenticatedUserId,
 };

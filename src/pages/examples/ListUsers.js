@@ -33,8 +33,11 @@ import { Fragment } from "react";
 export default (props) => {
   let count = 0;
   const [users, setUsers] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState();
   useEffect(() => {
     refreshList();
+    const currentUserId_ = UserService.getAuthenticatedUserId();
+    setCurrentUserId(currentUserId_);
   }, []);
 
   const refreshList = () => {
@@ -108,14 +111,16 @@ export default (props) => {
                             >
                               Edit
                             </Button>
-                            <Button
-                              variant="primary"
-                              type="button"
-                              size="sm"
-                              onClick={handleDelete.bind(this, user._id)}
-                            >
-                              Delete
-                            </Button>
+                            {currentUserId !== user._id ? (
+                              <Button
+                                variant="primary"
+                                type="button"
+                                size="sm"
+                                onClick={handleDelete.bind(this, user._id)}
+                              >
+                                Delete
+                              </Button>
+                            ) : null}
                           </td>
                         </tr>
                       </Fragment>
