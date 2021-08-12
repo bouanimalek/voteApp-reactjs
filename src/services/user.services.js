@@ -82,8 +82,11 @@ const getAuthenticatedUserId = () => {
   const token = localStorage.getItem("token");
   if (token) {
     const decoded = jwt_decode(token);
-    console.log(decoded);
-    return decoded.userId;
+    if (decoded) {
+      return decoded.userId;
+    } else {
+      return null;
+    }
   } else {
     return null;
   }
