@@ -15,7 +15,15 @@ export const Routes = {
   Lock: { path: "/examples/lock" },
   NotFound: { path: "/examples/404" },
   ServerError: { path: "/examples/500" },
-  AddEvent: { path: "/addEvent" },
+  AddEvent: { path: "/event/create" },
+  Events: { path: "/events" },
+  EditEvent: { path: "/events/edit/:idEvent" },
+  Users: { path: "/users" },
+  EditUser: { path: "/users/edit/:idUser" },
+  Tags: { path: "/tags" },
+  AddTag: { path: "/tags/create" },
+  EditTag: { path: "/tags/edit/:idTag" },
+  Tickets: { path: "/tickets" },
 
   // docs
   DocsOverview: { path: "/documentation/overview" },

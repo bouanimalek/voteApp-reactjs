@@ -49,6 +49,14 @@ import Tabs from "./components/Tabs";
 import Tooltips from "./components/Tooltips";
 import Toasts from "./components/Toasts";
 import AddEvent from "./examples/AddEvent";
+import ListUsers from "./examples/ListUsers";
+import EditUser from "./examples/EditUser";
+import ListTags from "./examples/ListTags";
+import AddTag from "./examples/AddTag";
+import EditTag from "./examples/EditTag";
+import ListEvents from "./examples/ListEvents";
+import EditEvent from "./examples/EditEvent";
+import ListTickets from "./examples/ListTickets";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -159,6 +167,22 @@ export default () => (
     />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
     <RouteWithSidebar exact path={Routes.AddEvent.path} component={AddEvent} />
+    <RouteWithSidebar exact path={Routes.Events.path} component={ListEvents} />
+    <RouteWithSidebar
+      exact
+      path={Routes.EditEvent.path}
+      component={EditEvent}
+    />
+    <RouteWithSidebar
+      exact
+      path={Routes.Tickets.path}
+      component={ListTickets}
+    />
+    <RouteWithSidebar exact path={Routes.Users.path} component={ListUsers} />
+    <RouteWithSidebar exact path={Routes.EditUser.path} component={EditUser} />
+    <RouteWithSidebar exact path={Routes.Tags.path} component={ListTags} />
+    <RouteWithSidebar exact path={Routes.AddTag.path} component={AddTag} />
+    <RouteWithSidebar exact path={Routes.EditTag.path} component={EditTag} />
     <RouteWithSidebar
       exact
       path={Routes.BootstrapTables.path}

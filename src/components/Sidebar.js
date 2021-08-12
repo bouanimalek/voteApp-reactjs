@@ -17,6 +17,10 @@ import {
   faMapPin,
   faInbox,
   faRocket,
+  faUsers,
+  faTags,
+  faFilePdf,
+  faListUl,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
@@ -203,16 +207,33 @@ export default (props = {}) => {
                 icon={faHandHoldingUsd}
                 link={Routes.Transactions.path}
               />
+
+              <NavItem
+                title="Manage Users"
+                icon={faUsers}
+                link={Routes.Users.path}
+              />
+              <NavItem
+                title="Manage Tags"
+                icon={faTags}
+                link={Routes.Tags.path}
+              />
+              <NavItem
+                title="Manage Events"
+                icon={faListUl}
+                link={Routes.Events.path}
+              />
+              <NavItem
+                title="Manage Tickets"
+                icon={faFilePdf}
+                link={Routes.Tickets.path}
+              />
               <NavItem
                 title="Settings"
                 icon={faCog}
                 link={Routes.Settings.path}
               />
-              <NavItem
-                title="AddEvent"
-                icon={faCog}
-                link={Routes.AddEvent.path}
-              />
+
               <NavItem
                 external
                 title="Calendar"
