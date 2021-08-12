@@ -46,7 +46,6 @@ const deleteTag = (id) => {
   return axios({
     method: "delete",
     url: `${BASE_URL}/tags/${id}`,
-    data: payload,
     headers: authHeader(),
   });
 };
