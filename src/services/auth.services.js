@@ -34,9 +34,17 @@ const resetPassword = (payload, token) => {
   });
 };
 
+const logout = () => {
+  return axios({
+    method: "get",
+    url: `${BASE_URL}/logout`,
+  });
+};
+
 export default {
   register,
   login,
   forgotPassword,
   resetPassword,
+  logout,
 };
