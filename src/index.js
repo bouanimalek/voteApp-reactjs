@@ -20,7 +20,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // interceptors
 import requestInterceptor from "./interceptors/request.interceptors";
-import responsetInterceptor from "./interceptors/response.interceptors";
+import createResponsetInterceptor from "./interceptors/response.interceptors";
 
 // core styles
 import "./scss/volt.scss";
@@ -33,12 +33,13 @@ import HomePage from "./pages/HomePage";
 import ScrollToTop from "./components/ScrollToTop";
 import { createBrowserHistory } from "history";
 
-export const history = createBrowserHistory();
+const history = createBrowserHistory();
+createResponsetInterceptor(history);
 ReactDOM.render(
-  <HashRouter history={history}>
+  <HashRouter>
     <ToastContainer />
     <ScrollToTop />
-    <HomePage />
+    <HomePage history={history} />
   </HashRouter>,
   document.getElementById("root")
 );
