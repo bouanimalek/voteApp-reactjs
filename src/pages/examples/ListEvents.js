@@ -82,12 +82,12 @@ export default (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {events.map((tag) => {
+                  {events.map((event) => {
                     return (
-                      <Fragment key={tag._id}>
+                      <Fragment key={event._id}>
                         <tr>
-                          <td>{tag.name}</td>
-                          <td>{tag.description}</td>
+                          <td>{event.name}</td>
+                          <td>{event.description}</td>
                           <td>
                             {" "}
                             <Button
@@ -95,7 +95,7 @@ export default (props) => {
                               type="button"
                               size="sm"
                               className="me-1"
-                              onClick={handleEdit.bind(this, tag._id)}
+                              onClick={handleEdit.bind(this, event._id)}
                             >
                               Edit
                             </Button>
@@ -103,7 +103,7 @@ export default (props) => {
                               variant="primary"
                               type="button"
                               size="sm"
-                              onClick={handleDelete.bind(this, tag._id)}
+                              onClick={handleDelete.bind(this, event._id)}
                             >
                               Delete
                             </Button>
