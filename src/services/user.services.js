@@ -92,6 +92,29 @@ const getAuthenticatedUserId = () => {
   }
 };
 
+const validate = (token) => {
+  const decoded = jwt_decode(token);
+  if (decoded) {
+    const currentDate = Date.now();
+    const tokenDate = decoded.exp;
+    if (tokenDate <= currentDate) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
+
+const isAuthenticated = () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    return validate(token);
+  } else {
+    return false;
+  }
+};
 export default {
   getAllUsers,
   getUserById,
@@ -102,4 +125,5 @@ export default {
   getUserWithAllEvents,
   getAllUsersWithAllEvents,
   getAuthenticatedUserId,
+  isAuthenticated,
 };
