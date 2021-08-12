@@ -1,5 +1,4 @@
 import axios from "axios";
-import authHeader from "./auth-header";
 import jwt_decode from "jwt-decode";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -9,7 +8,6 @@ const getAllUsers = () => {
   return axios({
     method: "get",
     url: `${BASE_URL}/users`,
-    headers: authHeader(),
   });
 };
 
@@ -18,7 +16,6 @@ const getUserById = (id) => {
   return axios({
     method: "get",
     url: `${BASE_URL}/users/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -28,7 +25,6 @@ const modifyUser = (payload, id) => {
     method: "put",
     url: `${BASE_URL}/users/${id}`,
     data: payload,
-    headers: authHeader(),
   });
 };
 
@@ -37,7 +33,6 @@ const deleteUser = (id) => {
   return axios({
     method: "delete",
     url: `${BASE_URL}/users/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -46,7 +41,6 @@ const affectEventToUser = (idUser, idEvent) => {
   return axios({
     method: "post",
     url: `${BASE_URL}/users/affectEventToUser/${idUser}/${idEvent}`,
-    headers: authHeader(),
   });
 };
 
@@ -55,7 +49,6 @@ const desAffectEventFromUser = (idUser, idEvent) => {
   return axios({
     method: "post",
     url: `${BASE_URL}/users/desAffectEvent/${idUser}/${idEvent}`,
-    headers: authHeader(),
   });
 };
 
@@ -64,7 +57,6 @@ const getUserWithAllEvents = (id) => {
   return axios({
     method: "get",
     url: `${BASE_URL}/userWithEvents/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -73,7 +65,6 @@ const getAllUsersWithAllEvents = () => {
   return axios({
     method: "get",
     url: `${BASE_URL}/usersWithEvents`,
-    headers: authHeader(),
   });
 };
 

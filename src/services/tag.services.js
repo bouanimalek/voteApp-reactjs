@@ -1,5 +1,4 @@
 import axios from "axios";
-import authHeader from "./auth-header";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -8,7 +7,6 @@ const getAllTags = () => {
   return axios({
     method: "get",
     url: `${BASE_URL}/tags`,
-    headers: authHeader(),
   });
 };
 
@@ -17,7 +15,6 @@ const getTagById = (id) => {
   return axios({
     method: "get",
     url: `${BASE_URL}/tags/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -27,7 +24,6 @@ const createTag = (payload) => {
     method: "post",
     url: `${BASE_URL}/tags`,
     data: payload,
-    headers: authHeader(),
   });
 };
 
@@ -37,7 +33,6 @@ const modifyTag = (payload, id) => {
     method: "put",
     url: `${BASE_URL}/tags/${id}`,
     data: payload,
-    headers: authHeader(),
   });
 };
 
@@ -46,7 +41,6 @@ const deleteTag = (id) => {
   return axios({
     method: "delete",
     url: `${BASE_URL}/tags/${id}`,
-    headers: authHeader(),
   });
 };
 

@@ -1,5 +1,4 @@
 import axios from "axios";
-import authHeader from "./auth-header";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -8,7 +7,6 @@ const getAllEvents = () => {
   return axios({
     method: "get",
     url: `${BASE_URL}/events`,
-    headers: authHeader(),
   });
 };
 
@@ -18,7 +16,6 @@ const createEvent = (payload) => {
     method: "post",
     url: `${BASE_URL}/events`,
     data: payload,
-    headers: authHeader(),
   });
 };
 
@@ -27,7 +24,6 @@ const getEventById = (id) => {
   return axios({
     method: "get",
     url: `${BASE_URL}/events/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -37,7 +33,6 @@ const modifyEvent = (payload, id) => {
     method: "put",
     url: `${BASE_URL}/events/${id}`,
     data: payload,
-    headers: authHeader(),
   });
 };
 
@@ -46,7 +41,6 @@ const deleteEvent = (id) => {
   return axios({
     method: "delete",
     url: `${BASE_URL}/events/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -55,7 +49,6 @@ const affectAuthorToEvent = (idEvent, idUser) => {
   return axios({
     method: "post",
     url: `${BASE_URL}/events/affectAuthorToEvent/${idEvent}/${idUser}`,
-    headers: authHeader(),
   });
 };
 
@@ -64,7 +57,6 @@ const desAffectAuthorEvent = (idEvent) => {
   return axios({
     method: "post",
     url: `${BASE_URL}/events/desAffectAuthor/${idEvent}`,
-    headers: authHeader(),
   });
 };
 
@@ -73,7 +65,6 @@ const affectTagEvent = (idEvent, idTag) => {
   return axios({
     method: "post",
     url: `${BASE_URL}/events/affectTagToEvent/${idEvent}/${idTag}`,
-    headers: authHeader(),
   });
 };
 
@@ -82,7 +73,6 @@ const desAffectTagEvent = (idEvent, idTag) => {
   return axios({
     method: "post",
     url: `${BASE_URL}/events/desAffectTag/${idEvent}/${idTag}`,
-    headers: authHeader(),
   });
 };
 
@@ -91,7 +81,6 @@ const getEventWithAuthor = (id) => {
   return axios({
     method: "get",
     url: `${BASE_URL}/events/getEventWithAuthor/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -100,7 +89,6 @@ const getAllEventsWithAllAuthor = () => {
   return axios({
     method: "get",
     url: `${BASE_URL}/events/getAllEventsWithAuthor`,
-    headers: authHeader(),
   });
 };
 
@@ -109,7 +97,6 @@ const getEventWithTags = (id) => {
   return axios({
     method: "get",
     url: `${BASE_URL}/events/getEventWithTags/${id}`,
-    headers: authHeader(),
   });
 };
 
@@ -118,7 +105,6 @@ const getAllEventsWithAllTags = () => {
   return axios({
     method: "get",
     url: `${BASE_URL}/events/getAllEventsWithTags`,
-    headers: authHeader(),
   });
 };
 

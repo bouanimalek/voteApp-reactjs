@@ -18,6 +18,9 @@ import ReactDOM from "react-dom";
 import { HashRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// interceptors
+import requestInterceptor from "./interceptors/request.interceptors";
+import responsetInterceptor from "./interceptors/response.interceptors";
 
 // core styles
 import "./scss/volt.scss";
@@ -28,9 +31,11 @@ import "react-datetime/css/react-datetime.css";
 
 import HomePage from "./pages/HomePage";
 import ScrollToTop from "./components/ScrollToTop";
+import { createBrowserHistory } from "history";
 
+export const history = createBrowserHistory();
 ReactDOM.render(
-  <HashRouter>
+  <HashRouter history={history}>
     <ToastContainer />
     <ScrollToTop />
     <HomePage />
