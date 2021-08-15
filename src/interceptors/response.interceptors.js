@@ -14,11 +14,13 @@ const createResponseInterceptor = (history) => {
       }
       if (error.response.status === 404) {
         // not found
-        history.push("/examples/404");
+        window.location.replace("http://localhost:3000/#/examples/404");
+        //history.push("/examples/404");
       }
       if (error.response.status === 500) {
         // server error
-        history.push("/examples/500");
+        window.location.replace("http://localhost:3000/#/examples/500");
+        //  history.push("/#/examples/500");
       }
       return Promise.reject(error);
     }
