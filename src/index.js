@@ -39,7 +39,7 @@ ReactDOM.render(
   <HashRouter>
     <ToastContainer />
     <ScrollToTop />
-    <HomePage history={history} />
+    <HomePage />
   </HashRouter>,
   document.getElementById("root")
 );
