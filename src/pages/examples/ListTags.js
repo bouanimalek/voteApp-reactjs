@@ -28,6 +28,7 @@ import { GeneralInfoForm } from "../../components/Forms";
 import TagService from "../../services/tag.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
+import Swal from "sweetalert2";
 
 export default (props) => {
   const [tags, setTags] = useState([]);
@@ -46,17 +47,25 @@ export default (props) => {
       });
   };
   const handleDelete = (id) => {
-    console.log(id);
-    TagService.deleteTag(id)
-      .then((response) => {
-        console.log(response);
-        toast.success(response.data.message);
-        refreshList();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Internal server error");
-      });
+    Swal.fire({
+      title: "Do you want to delete the Tag?",
+      showCancelButton: true,
+      confirmButtonText: `Delete`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        TagService.deleteTag(id)
+          .then((response) => {
+            //console.log(response);
+            Swal.fire("Tag Deleted!", "", "success");
+            setTags(tags);
+            refreshList();
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("Internal server error");
+          });
+      }
+    });
   };
 
   const handleEdit = (id) => {

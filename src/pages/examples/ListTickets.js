@@ -28,6 +28,13 @@ import { GeneralInfoForm } from "../../components/Forms";
 import TicketService from "../../services/ticket.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
+import Swal from "sweetalert2";
+import { Worker } from "@react-pdf-viewer/core";
+// Import the main component
+import { Viewer } from "@react-pdf-viewer/core";
+
+// Import the styles
+import "@react-pdf-viewer/core/lib/styles/index.css";
 
 export default (props) => {
   const [tickets, setTickets] = useState([]);
@@ -47,19 +54,33 @@ export default (props) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
-    TicketService.deleteTicketById(id)
-      .then((response) => {
-        //console.log(response);
-        setTickets(tickets);
-        toast.success(response.data.message);
-        refreshList();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Internal server error");
-      });
+    Swal.fire({
+      title: "Do you want to delete the Ticket?",
+      showCancelButton: true,
+      confirmButtonText: `Delete`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        TicketService.deleteTicketById(id)
+          .then((response) => {
+            //console.log(response);
+            Swal.fire("Ticket Deleted!", "", "success");
+            setTickets(tickets);
+            refreshList();
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("Internal server error");
+          });
+      }
+    });
   };
+
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
 
   return (
     <>
@@ -112,6 +133,9 @@ export default (props) => {
             </Card.Body>
           </Card>
         </Col>
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+          <Viewer fileUrl="http://localhost:4000/public/tickets_pdf/610e8b05378b0326d8266ece.pdf" />
+        </Worker>
       </Row>
     </>
   );

@@ -29,6 +29,7 @@ import { GeneralInfoForm } from "../../components/Forms";
 import UserService from "../../services/user.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
+import Swal from "sweetalert2";
 
 export default (props) => {
   let count = 0;
@@ -53,18 +54,25 @@ export default (props) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
-    UserService.deleteUser(id)
-      .then((response) => {
-        //console.log(response);
-        setUsers(users);
-        toast.success(response.data.message);
-        refreshList();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Internal server error");
-      });
+    Swal.fire({
+      title: "Do you want to delete the user?",
+      showCancelButton: true,
+      confirmButtonText: `Delete`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        UserService.deleteUser(id)
+          .then((response) => {
+            //console.log(response);
+            Swal.fire("User Deleted!", "", "success");
+            setUsers(users);
+            refreshList();
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("Internal server error");
+          });
+      }
+    });
   };
 
   const handleEdit = (id) => {
