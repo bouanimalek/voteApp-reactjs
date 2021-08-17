@@ -28,7 +28,7 @@ import { GeneralInfoForm } from "../../components/Forms";
 import TagService from "../../services/tag.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
-import Swal from "sweetalert2";
+import showDeleteConfirmation from "../../services/sweetAlert.services";
 
 export default (props) => {
   const [tags, setTags] = useState([]);
@@ -47,16 +47,12 @@ export default (props) => {
       });
   };
   const handleDelete = (id) => {
-    Swal.fire({
-      title: "Do you want to delete the Tag?",
-      showCancelButton: true,
-      confirmButtonText: `Delete`,
-    }).then((result) => {
+    showDeleteConfirmation("tag").then((result) => {
       if (result.isConfirmed) {
         TagService.deleteTag(id)
           .then((response) => {
             //console.log(response);
-            Swal.fire("Tag Deleted!", "", "success");
+            //Swal.fire("Tag Deleted!", "", "success");
             setTags(tags);
             refreshList();
           })

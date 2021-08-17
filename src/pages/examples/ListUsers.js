@@ -29,7 +29,7 @@ import { GeneralInfoForm } from "../../components/Forms";
 import UserService from "../../services/user.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
-import Swal from "sweetalert2";
+import showDeleteConfirmation from "../../services/sweetAlert.services";
 
 export default (props) => {
   let count = 0;
@@ -54,16 +54,12 @@ export default (props) => {
   };
 
   const handleDelete = (id) => {
-    Swal.fire({
-      title: "Do you want to delete the user?",
-      showCancelButton: true,
-      confirmButtonText: `Delete`,
-    }).then((result) => {
+    showDeleteConfirmation("user").then((result) => {
       if (result.isConfirmed) {
         UserService.deleteUser(id)
           .then((response) => {
             //console.log(response);
-            Swal.fire("User Deleted!", "", "success");
+            // Swal.fire("User Deleted!", "", "success");
             setUsers(users);
             refreshList();
           })

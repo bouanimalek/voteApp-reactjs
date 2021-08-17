@@ -28,7 +28,8 @@ import { GeneralInfoForm } from "../../components/Forms";
 import EventService from "../../services/event.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
-import Swal from "sweetalert2";
+
+import showDeleteConfirmation from "../../services/sweetAlert.services";
 
 export default (props) => {
   const [events, setEvents] = useState([]);
@@ -47,16 +48,12 @@ export default (props) => {
       });
   };
   const handleDelete = (id) => {
-    Swal.fire({
-      title: "Do you want to delete the Event?",
-      showCancelButton: true,
-      confirmButtonText: `Delete`,
-    }).then((result) => {
+    showDeleteConfirmation("event").then((result) => {
       if (result.isConfirmed) {
         EventService.deleteEvent(id)
           .then((response) => {
             //console.log(response);
-            Swal.fire("Event Deleted!", "", "success");
+            //Swal.fire("Event Deleted!", "", "success");
             setEvents(events);
             refreshList();
           })
