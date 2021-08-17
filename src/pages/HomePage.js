@@ -57,6 +57,9 @@ import EditTag from "./examples/EditTag";
 import ListEvents from "./examples/ListEvents";
 import EditEvent from "./examples/EditEvent";
 import ListTickets from "./examples/ListTickets";
+import SecuredRoutes from "../securedRoutes/SecuredRoutes";
+import SecuredRoutes_ from "../securedRoutes/SecuredRoutes_";
+import UserService from "../services/user.services";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -103,21 +106,25 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) => (
-        <>
-          <Preloader show={loaded ? false : true} />
-          <Sidebar />
+      render={(props) =>
+        UserService.isAuthenticated() ? (
+          <>
+            <Preloader show={loaded ? false : true} />
+            <Sidebar />
 
-          <main className="content">
-            <Navbar />
-            <Component {...props} />
-            <Footer
-              toggleSettings={toggleSettings}
-              showSettings={showSettings}
-            />
-          </main>
-        </>
-      )}
+            <main className="content">
+              <Navbar />
+              <Component {...props} />
+              <Footer
+                toggleSettings={toggleSettings}
+                showSettings={showSettings}
+              />
+            </main>
+          </>
+        ) : (
+          <Redirect to={{ pathname: "/sign-in" }} />
+        )
+      }
     />
   );
 };
