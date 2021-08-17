@@ -28,7 +28,7 @@ import { GeneralInfoForm } from "../../components/Forms";
 import TicketService from "../../services/ticket.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
-import Swal from "sweetalert2";
+import showDeleteConfirmation from "../../services/sweetAlert.services";
 import { Worker } from "@react-pdf-viewer/core";
 // Import the main component
 import { Viewer } from "@react-pdf-viewer/core";
@@ -54,16 +54,12 @@ export default (props) => {
   };
 
   const handleDelete = (id) => {
-    Swal.fire({
-      title: "Do you want to delete the Ticket?",
-      showCancelButton: true,
-      confirmButtonText: `Delete`,
-    }).then((result) => {
+    showDeleteConfirmation("ticket").then((result) => {
       if (result.isConfirmed) {
         TicketService.deleteTicketById(id)
           .then((response) => {
             //console.log(response);
-            Swal.fire("Ticket Deleted!", "", "success");
+            // Swal.fire("Ticket Deleted!", "", "success");
             setTickets(tickets);
             refreshList();
           })
