@@ -29,12 +29,8 @@ import TicketService from "../../services/ticket.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { Fragment } from "react";
 import showDeleteConfirmation from "../../services/sweetAlert.services";
-import { Worker } from "@react-pdf-viewer/core";
-// Import the main component
-import { Viewer } from "@react-pdf-viewer/core";
 
-// Import the styles
-import "@react-pdf-viewer/core/lib/styles/index.css";
+import ViewTicket from "./ViewTicket";
 
 export default (props) => {
   const [tickets, setTickets] = useState([]);
@@ -78,6 +74,10 @@ export default (props) => {
     setNumPages(numPages);
   }
 
+  const [modalShow, setModalShow] = useState(false);
+  const handleViewTicket = (id) => {
+    setModalShow(true);
+  };
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
@@ -112,6 +112,19 @@ export default (props) => {
                           <td>{ticket.event ? ticket.event.name : ""}</td>
                           <td>
                             <Button
+                              variant="info me-1"
+                              type="button"
+                              size="sm"
+                              onClick={handleViewTicket.bind(this, ticket._id)}
+                            >
+                              View Ticket
+                            </Button>
+                            <ViewTicket
+                              path={ticket.ticketPath}
+                              show={modalShow}
+                              onHide={() => setModalShow(false)}
+                            />
+                            <Button
                               variant="primary"
                               type="button"
                               size="sm"
@@ -129,9 +142,6 @@ export default (props) => {
             </Card.Body>
           </Card>
         </Col>
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-          <Viewer fileUrl="http://localhost:4000/public/tickets_pdf/610e8b05378b0326d8266ece.pdf" />
-        </Worker>
       </Row>
     </>
   );
