@@ -10,17 +10,18 @@ const createResponseInterceptor = (history) => {
       console.log(error);
       if (error.response.status === 401) {
         // unauthorized
-        history.push("/sign-in");
+        // history.push("/sign-in");
+        window.location.replace("http://localhost:3000/#/sign-in");
       }
       if (error.response.status === 404) {
         // not found
-        window.location.replace("http://localhost:3000/#/examples/404");
-        //history.push("/examples/404");
+        window.location.replace("http://localhost:3000/#/404");
+        //history.push("/404");
       }
       if (error.response.status === 500) {
         // server error
-        window.location.replace("http://localhost:3000/#/examples/500");
-        //  history.push("/#/examples/500");
+        window.location.replace("http://localhost:3000/#/500");
+        //  history.push("/#/500");
       }
       return Promise.reject(error);
     }
