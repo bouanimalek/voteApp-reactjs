@@ -50,6 +50,13 @@ export default () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [image, setImage] = useState("");
+  // validation
+  const [firstnameRequired, setFirstnameRequired] = useState("");
+  const [lastnameRequired, setLastnameRequired] = useState("");
+  const [phoneRequired, setPhoneRequired] = useState("");
+  const [emailRequired, setEmailRequired] = useState("");
+  const [addressRequired, setAddressRequired] = useState("");
+  const [imageRequired, setImageRequired] = useState("");
 
   const birthdayDate = new Date(birthday.valueOf()).toLocaleDateString(
     "fr-CA",
@@ -71,17 +78,58 @@ export default () => {
   data.append("address", address);
   data.append("images", image);
 
+  const validate = () => {
+    let isValidForm = false;
+    if (!firstname) {
+      setFirstnameRequired("First name is required!");
+    } else {
+      setFirstnameRequired(null);
+    }
+    if (!lastname) {
+      setLastnameRequired("Lastname is required!");
+    } else {
+      setLastnameRequired(null);
+    }
+    if (!phone) {
+      setPhoneRequired("Phone is required!");
+    } else {
+      setPhoneRequired(null);
+    }
+    if (!email) {
+      setEmailRequired("Email is required!");
+    } else {
+      setEmailRequired(null);
+    }
+    if (!address) {
+      setAddressRequired("Address name is required!");
+    } else {
+      setAddressRequired(null);
+    }
+    if (!image) {
+      setImageRequired("Image is required!");
+    } else {
+      setImageRequired(null);
+    }
+    if (firstname && lastname && phone && email && address && image) {
+      isValidForm = true;
+    }
+    return isValidForm;
+  };
+
   const handleSave = () => {
-    const idUser = UserService.getAuthenticatedUserId();
-    UserService.modifyUser(data, idUser)
-      .then((response) => {
-        console.log(response);
-        toast.success("User modified successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data.message);
-      });
+    const isValid = validate();
+    if (isValid) {
+      const idUser = UserService.getAuthenticatedUserId();
+      UserService.modifyUser(data, idUser)
+        .then((response) => {
+          console.log(response);
+          toast.success("User modified successfully!");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    }
   };
 
   return (
@@ -170,6 +218,9 @@ export default () => {
                         value={user ? user.firstname : ""}
                         onChange={(e) => setFirstname(e.target.value)}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {firstnameRequired}
+                      </div>
                     </Form.Group>
                   </Col>
                   <Col md={6} className="mb-3">
@@ -182,6 +233,9 @@ export default () => {
                         value={user ? user.lastname : ""}
                         onChange={(e) => setLastname(e.target.value)}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {lastnameRequired}
+                      </div>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -224,6 +278,9 @@ export default () => {
                         value={user ? user.phone : ""}
                         onChange={(e) => setPhone(e.target.value)}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {phoneRequired}
+                      </div>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -240,6 +297,9 @@ export default () => {
                         value={user ? user.email : ""}
                         onChange={(e) => setEmail(e.target.value)}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {emailRequired}
+                      </div>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -256,6 +316,9 @@ export default () => {
                         value={user ? user.address : ""}
                         onChange={(e) => setAddress(e.target.value)}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {addressRequired}
+                      </div>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -338,6 +401,9 @@ export default () => {
                     </div>
                   </div>
                 </Card.Body>
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {imageRequired}
+                </div>
               </Card>
             </Col>
           </Row>

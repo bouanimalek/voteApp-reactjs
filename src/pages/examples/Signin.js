@@ -3,11 +3,7 @@ import AuthService from "../../services/auth.services";
 import { toast } from "react-toastify";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleLeft,
-  faEnvelope,
-  faUnlockAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
   faGithub,

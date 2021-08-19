@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Button } from "@themesberg/react-bootstrap";
 import { Worker } from "@react-pdf-viewer/core";
-import { Link } from "react-router-dom";
+
 // Import the main component
 import { Viewer } from "@react-pdf-viewer/core";
 // Import the styles
