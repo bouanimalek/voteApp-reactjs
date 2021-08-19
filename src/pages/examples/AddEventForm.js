@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment-timezone";
 import Datetime from "react-datetime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,20 +11,58 @@ import {
   Form,
   Button,
   InputGroup,
+  FormGroup,
 } from "@themesberg/react-bootstrap";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import EventService from "../../services/event.services";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+// import Select from "react-select-2";
+// // Be sure to include styles at some point, probably during your bootstrapping
+// import "react-select-2/dist/css/react-select-2.css";
+import Select from "react-select";
+import TagService from "../../services/tag.services";
+import makeAnimated from "react-select/animated";
 
 export const AddEventForm = () => {
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    TagService.getAllTags()
+      .then((response) => {
+        console.log(response.data);
+        const tagOptions = response.data.map((tag) => {
+          return { value: tag._id, label: tag.name };
+        });
+        console.log(tagOptions);
+        setTags(tagOptions);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [availableTicketNumber, setavailableTicketNumber] = useState(Number);
+  const [availableTicketNumber, setAvailableTicketNumber] = useState(Number);
   const [image, setImage] = useState("");
   const [address, setAddress] = useState("");
+  const [eventType, setEventType] = useState("free");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [tag_, setTag_] = useState([]);
+  // validation
+  const [nameRequired, setNameRequired] = useState("");
+  const [descriptionRequired, setDescriptionRequired] = useState("");
+  const [priceRequired, setPriceRequired] = useState("");
+  const [availableTicketNumberRequired, setAvailableTicketNumberRequired] =
+    useState("");
+  const [imageRequired, setImageRequired] = useState("");
+  const [addressRequired, setAddressRequired] = useState("");
+  const [eventTypeRequired, setEventTypeRequired] = useState("");
+  const [startDateRequired, setStartDateRequired] = useState("");
+  const [endDateRequired, setEndDateRequired] = useState("");
+  const [tag_Required, setTag_Required] = useState("");
 
   const startDateTime = new Date(startDate.valueOf()).toLocaleDateString(
     "fr-CA",
@@ -49,29 +87,111 @@ export const AddEventForm = () => {
   data.append("description", description);
   data.append("price", price);
   data.append("availableTicketNumber", availableTicketNumber);
-  data.append("address", address);
+  data.append("location", address);
   data.append("startDateTime", startDateTime);
   data.append("endDateTime", endDateTime);
   data.append("images", image);
+  data.append("tags", JSON.stringify(tag_));
+  data.append("eventType", eventType);
+
+  const validate = () => {
+    let isValidForm = false;
+    if (!name) {
+      setNameRequired("Name is required!");
+    } else {
+      setNameRequired(null);
+    }
+    if (!description) {
+      setDescriptionRequired("Description is required!");
+    } else {
+      setDescriptionRequired(null);
+    }
+    if (!price) {
+      setPriceRequired("Price is required!");
+    } else {
+      setPriceRequired(null);
+    }
+    if (!availableTicketNumber) {
+      setAvailableTicketNumberRequired("Available tickets is required!");
+    } else {
+      setAvailableTicketNumberRequired(null);
+    }
+    if (!image) {
+      setImageRequired("Image is required!");
+    } else {
+      setImageRequired(null);
+    }
+    if (!address) {
+      setAddressRequired("Address is required!");
+    } else {
+      setAddressRequired(null);
+    }
+    if (!startDate) {
+      setStartDateRequired("Start date is required!");
+    } else {
+      setStartDateRequired(null);
+    }
+    if (!endDate) {
+      setEndDateRequired("End date is required!");
+    } else {
+      setEndDateRequired(null);
+    }
+    if (!eventType) {
+      setEventTypeRequired("Event type is required!");
+    } else {
+      setEventTypeRequired(null);
+    }
+    if (!tag_) {
+      setTag_Required("Tag is required!");
+    } else {
+      setTag_Required(null);
+    }
+    if (
+      name &&
+      description &&
+      price &&
+      availableTicketNumber &&
+      image &&
+      address &&
+      startDate &&
+      endDate &&
+      eventType &&
+      tag_
+    ) {
+      isValidForm = true;
+    }
+    return isValidForm;
+  };
+
+  let history = useHistory();
 
   const handleSave = () => {
-    EventService.createEvent(data)
-      .then((response) => {
-        console.log(response.data);
-        console.log({ startDate, endDate });
-        toast.success("Event created successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data.message);
-        //console.log(name, description, price, startDate.toString(), address);
-      });
+    const isValid = validate();
+    if (isValid) {
+      EventService.createEvent(data)
+        .then((response) => {
+          console.log(response.data);
+          console.log({ startDate, endDate });
+          toast.success("Event created successfully!");
+          history.push("/events");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Internal server error");
+          //console.log(name, description, price, startDate.toString(), address);
+        });
+    }
+  };
+  const animatedComponents = makeAnimated();
+
+  const handleChangeTag = (options) => {
+    setTag_(options);
   };
 
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
-        <h5 className="mb-4">Add Event</h5>
+        <h5 className="mb-4">Add New Event</h5>
         <Form>
           <Row>
             <Col md={6} className="mb-3">
@@ -83,6 +203,9 @@ export const AddEventForm = () => {
                   placeholder="Enter your event name"
                   onChange={(e) => setName(e.target.value)}
                 />
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {nameRequired}
+                </div>
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
@@ -94,6 +217,9 @@ export const AddEventForm = () => {
                   placeholder="Enter event description"
                   onChange={(e) => setDescription(e.target.value)}
                 />
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {descriptionRequired}
+                </div>
               </Form.Group>
             </Col>
           </Row>
@@ -127,6 +253,9 @@ export const AddEventForm = () => {
                         onFocus={openCalendar}
                         onChange={() => {}}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {startDateRequired}
+                      </div>
                     </InputGroup>
                   )}
                 />
@@ -159,6 +288,9 @@ export const AddEventForm = () => {
                         onFocus={openCalendar}
                         onChange={() => {}}
                       />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {endDateRequired}
+                      </div>
                     </InputGroup>
                   )}
                 />
@@ -175,12 +307,23 @@ export const AddEventForm = () => {
                   placeholder="12 €"
                   onChange={(e) => setPrice(e.target.value)}
                 />
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {priceRequired}
+                </div>
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group id="availableTicketNumber">
                 <Form.Label>Number of tickets</Form.Label>
-                <Form.Control required type="number" placeholder="0" />
+                <Form.Control
+                  required
+                  type="number"
+                  placeholder="0"
+                  onChange={(e) => setAvailableTicketNumber(e.target.value)}
+                />
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {availableTicketNumberRequired}
+                </div>
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
@@ -217,6 +360,9 @@ export const AddEventForm = () => {
                     </div>
                   </div>
                 </Card.Body>
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {imageRequired}
+                </div>
               </Card>
             </Col>
             <Col sm={6} className="mb-3">
@@ -224,17 +370,59 @@ export const AddEventForm = () => {
                 <Form.Label>Address</Form.Label>
                 <Form.Control
                   required
-                  type="text"
+                  as="textarea"
                   placeholder="Enter your home address"
                   onChange={(e) => setAddress(e.target.value)}
                 />
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {addressRequired}
+                </div>
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group id="type" className="mb-4">
+                <Form.Label>Type</Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  onChange={(e) => setEventType(e.target.value)}
+                >
+                  <option value="free" selected>
+                    Free
+                  </option>
+                  <option value="paid">Paid</option>
+                </Form.Select>
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {eventTypeRequired}
+                </div>
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group id="type" className="mb-4">
+                <Form.Label>Tags</Form.Label>
+                <Select
+                  isMulti
+                  options={tags}
+                  value={tag_}
+                  onChange={handleChangeTag}
+                />
+                <div className="text-start w-100 invalid-feedback d-block">
+                  {tag_Required}
+                </div>
               </Form.Group>
             </Col>
           </Row>
 
           <div className="mt-3">
             <Button variant="primary" type="button" onClick={handleSave}>
-              Save All
+              <i className="fa fa-save"></i> Save
+            </Button>
+            <Button
+              variant="primary ms-1"
+              type="button"
+              onClick={() => history.push("/events")}
+            >
+              {" "}
+              <i className="fa fa-undo"></i> Cancel
             </Button>
           </div>
         </Form>
