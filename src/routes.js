@@ -13,10 +13,11 @@ export const Routes = {
   ForgotPassword: { path: "/forgot-password" },
   ResetPassword: { path: "/reset-password/:token" },
   Lock: { path: "/examples/lock" },
-  NotFound: { path: "/examples/404" },
-  ServerError: { path: "/examples/500" },
-  AddEvent: { path: "/event/create" },
+  NotFound: { path: "/404" },
+  ServerError: { path: "/500" },
+  AddEvent: { path: "/events/create" },
   Events: { path: "/events" },
+  EventsShow: { path: "/events/show" },
   EditEvent: { path: "/events/edit/:idEvent" },
   Users: { path: "/users" },
   EditUser: { path: "/users/edit/:idUser" },
@@ -24,6 +25,7 @@ export const Routes = {
   AddTag: { path: "/tags/create" },
   EditTag: { path: "/tags/edit/:idTag" },
   Tickets: { path: "/tickets" },
+  EditSettings: { path: "/users/settings" },
 
   // docs
   DocsOverview: { path: "/documentation/overview" },

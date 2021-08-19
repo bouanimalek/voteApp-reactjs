@@ -60,6 +60,8 @@ import ListTickets from "./examples/ListTickets";
 import SecuredRoutes from "../securedRoutes/SecuredRoutes";
 import SecuredRoutes_ from "../securedRoutes/SecuredRoutes_";
 import UserService from "../services/user.services";
+import EditSettings from "./examples/EditSettings";
+import EventsShow from "./examples/EventsShow";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -172,9 +174,18 @@ export default () => (
       path={Routes.Transactions.path}
       component={Transactions}
     />
-    <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
+    <RouteWithSidebar
+      exact
+      path={Routes.EditSettings.path}
+      component={EditSettings}
+    />
     <RouteWithSidebar exact path={Routes.AddEvent.path} component={AddEvent} />
     <RouteWithSidebar exact path={Routes.Events.path} component={ListEvents} />
+    <RouteWithSidebar
+      exact
+      path={Routes.EventsShow.path}
+      component={EventsShow}
+    />
     <RouteWithSidebar
       exact
       path={Routes.EditEvent.path}

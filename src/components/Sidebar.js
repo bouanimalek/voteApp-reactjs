@@ -195,6 +195,11 @@ export default (props = {}) => {
                 icon={faChartPie}
               />
               <NavItem
+                title="Events"
+                link={Routes.EventsShow.path}
+                icon={faChartPie}
+              />
+              <NavItem
                 external
                 title="Messages"
                 link="https://demo.themesberg.com/volt-pro-react/#/messages"
@@ -231,7 +236,7 @@ export default (props = {}) => {
               <NavItem
                 title="Settings"
                 icon={faCog}
-                link={Routes.Settings.path}
+                link={Routes.EditSettings.path}
               />
 
               <NavItem
