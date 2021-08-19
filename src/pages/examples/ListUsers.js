@@ -78,7 +78,7 @@ export default (props) => {
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
       <Row>
-        <Col xs={12} xl={8}>
+        <Col xs={12} xl={12}>
           <Card border="light" className="shadow-sm mb-4">
             <Card.Body className="pb-0">
               <h5 className="mb-4">List Users</h5>
@@ -106,25 +106,27 @@ export default (props) => {
                           <td>{user.phone}</td>
                           <td>
                             {" "}
-                            <Button
-                              variant="info"
-                              type="button"
-                              size="sm"
-                              className="me-1"
-                              onClick={handleEdit.bind(this, user._id)}
-                            >
-                              Edit
-                            </Button>
-                            {currentUserId !== user._id ? (
+                            <div className="d-flex justify-content-center">
                               <Button
-                                variant="primary"
+                                variant="info"
                                 type="button"
                                 size="sm"
-                                onClick={handleDelete.bind(this, user._id)}
+                                className="me-1"
+                                onClick={handleEdit.bind(this, user._id)}
                               >
-                                Delete
+                                <i className="fa fa-edit"></i> Edit
                               </Button>
-                            ) : null}
+                              {currentUserId !== user._id ? (
+                                <Button
+                                  variant="primary"
+                                  type="button"
+                                  size="sm"
+                                  onClick={handleDelete.bind(this, user._id)}
+                                >
+                                  <i className="fa fa-trash"></i> Delete
+                                </Button>
+                              ) : null}
+                            </div>
                           </td>
                         </tr>
                       </Fragment>

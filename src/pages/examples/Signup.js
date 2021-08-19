@@ -62,7 +62,7 @@ export default (props) => {
     } else {
       setConfirmPasswordRequired(null);
     }
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       setPasswordError("Password doesnt match!");
     } else {
       setPasswordError(null);

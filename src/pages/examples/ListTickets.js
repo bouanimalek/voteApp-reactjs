@@ -82,7 +82,7 @@ export default (props) => {
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
       <Row>
-        <Col xs={12} xl={8}>
+        <Col xs={12} xl={12}>
           <Card border="light" className="shadow-sm mb-4">
             <Card.Body className="pb-0">
               <h5 className="mb-4">List Tickets</h5>
@@ -93,7 +93,7 @@ export default (props) => {
                 <thead className="thead-light">
                   <tr>
                     <th className="border-0 text-center">Owner</th>
-                    <th className="border-0">Event</th>
+                    <th className="border-0 text-center">Event</th>
                     <th className="border-0 text-center">Actions</th>
                   </tr>
                 </thead>
@@ -102,22 +102,24 @@ export default (props) => {
                     return (
                       <Fragment key={ticket._id}>
                         <tr>
-                          <td>
+                          <td className="text-center">
                             {ticket.owner
                               ? ticket.owner.firstname +
                                 " " +
                                 ticket.owner.lastname
                               : ""}{" "}
                           </td>
-                          <td>{ticket.event ? ticket.event.name : ""}</td>
-                          <td>
+                          <td className="text-center">
+                            {ticket.event ? ticket.event.name : ""}
+                          </td>
+                          <td className="text-center">
                             <Button
                               variant="info me-1"
                               type="button"
                               size="sm"
                               onClick={handleViewTicket.bind(this, ticket._id)}
                             >
-                              View Ticket
+                              <i className="fa fa-file-pdf"></i> View Ticket
                             </Button>
                             <ViewTicket
                               path={ticket.ticketPath}
@@ -130,7 +132,7 @@ export default (props) => {
                               size="sm"
                               onClick={handleDelete.bind(this, ticket._id)}
                             >
-                              Delete
+                              <i className="fa fa-trash"></i> Delete
                             </Button>
                           </td>
                         </tr>

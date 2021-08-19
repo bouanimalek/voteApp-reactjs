@@ -71,10 +71,24 @@ export default (props) => {
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
       <Row>
-        <Col xs={12} xl={8}>
+        <Col xs={12} xl={12}>
           <Card border="light" className="shadow-sm mb-4">
             <Card.Body className="pb-0">
-              <h5 className="mb-4">List Tags</h5>
+              <Row>
+                <Col xs={8} xl={10}>
+                  <h5 className="mb-4">List Tags</h5>
+                </Col>
+                <Col xs={4} xl={2}>
+                  <Button
+                    className="float-end"
+                    variant="info mb-4"
+                    type="button"
+                    onClick={() => props.history.push("/tags/create")}
+                  >
+                    <i className="fa fa-plus"></i> Create New Tag
+                  </Button>
+                </Col>
+              </Row>
               <Table
                 responsive
                 className="table-centered table-nowrap rounded mb-0"
@@ -102,7 +116,7 @@ export default (props) => {
                               className="me-1"
                               onClick={handleEdit.bind(this, tag._id)}
                             >
-                              Edit
+                              <i className="fa fa-edit"></i> Edit
                             </Button>
                             <Button
                               variant="primary"
@@ -110,7 +124,8 @@ export default (props) => {
                               size="sm"
                               onClick={handleDelete.bind(this, tag._id)}
                             >
-                              Delete
+                              {" "}
+                              <i className="fa fa-trash"></i> Delete
                             </Button>
                           </td>
                         </tr>

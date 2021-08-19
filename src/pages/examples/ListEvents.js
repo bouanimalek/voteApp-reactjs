@@ -41,7 +41,6 @@ export default (props) => {
     EventService.getAllEvents()
       .then((response) => {
         setEvents(response.data);
-        //console.log(users);
       })
       .catch((error) => {
         console.log(error);
@@ -71,11 +70,27 @@ export default (props) => {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
+
       <Row>
-        <Col xs={12} xl={8}>
+        <Col xs={12} xl={12} md={12}>
           <Card border="light" className="shadow-sm mb-4">
             <Card.Body className="pb-0">
-              <h5 className="mb-4">List Tags</h5>
+              <Row>
+                <Col sm={10}>
+                  <h5 className="mb-4">List Events</h5>
+                </Col>
+                <Col sm={2}>
+                  <Button
+                    className="float-end"
+                    variant="info mb-4"
+                    type="button"
+                    onClick={() => props.history.push("/events/create")}
+                  >
+                    <i className="fa fa-plus"></i> Add New Event
+                  </Button>
+                </Col>
+              </Row>
+
               <Table
                 responsive
                 className="table-centered table-nowrap rounded mb-0"
@@ -84,6 +99,12 @@ export default (props) => {
                   <tr>
                     <th className="border-0">Name</th>
                     <th className="border-0">Description</th>
+                    <th className="border-0">Start Date</th>
+                    <th className="border-0">End Date</th>
+                    <th className="border-0">Location</th>
+                    <th className="border-0">Price</th>
+                    <th className="border-0">Available Tickets</th>
+                    <th className="border-0">Type</th>
                     <th className="border-0">Actions</th>
                   </tr>
                 </thead>
@@ -94,6 +115,12 @@ export default (props) => {
                         <tr>
                           <td>{event.name}</td>
                           <td>{event.description}</td>
+                          <td>{event.startDateTime}</td>
+                          <td>{event.endDateTime}</td>
+                          <td>{event.location}</td>
+                          <td>{event.price}</td>
+                          <td>{event.availableTicketNumber}</td>
+                          <td>{event.eventType}</td>
                           <td>
                             {" "}
                             <Button
@@ -103,7 +130,7 @@ export default (props) => {
                               className="me-1"
                               onClick={handleEdit.bind(this, event._id)}
                             >
-                              Edit
+                              <i className="fa fa-edit"></i> Edit
                             </Button>
                             <Button
                               variant="primary"
@@ -111,7 +138,7 @@ export default (props) => {
                               size="sm"
                               onClick={handleDelete.bind(this, event._id)}
                             >
-                              Delete
+                              <i className="fa fa-trash"></i> Delete
                             </Button>
                           </td>
                         </tr>
