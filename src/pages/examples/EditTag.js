@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoxOpen,
@@ -36,14 +36,16 @@ import { useParams } from "react-router-dom";
 export default (props) => {
   const [tag, setTag] = useState({});
   const [name, setName] = useState("");
-  const [description, setDescriprion] = useState("");
+  const [description, setDescription] = useState("");
+  const [nameRequired, setNameRequired] = useState("");
+  const [descriptionRequired, setDescriptionRequired] = useState("");
   const { idTag } = useParams();
 
   useEffect(() => {
     TagService.getTagById(idTag)
       .then((response) => {
         setTag(response.data);
-        console.log(response);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -55,76 +57,99 @@ export default (props) => {
   };
 
   const handleDescription = (e) => {
-    setDescriprion(e.target.value);
+    setDescription(e.target.value);
   };
 
+  const validate = () => {
+    let isValidForm = false;
+    if (!name) {
+      setNameRequired("Name is required!");
+    } else {
+      setNameRequired(null);
+    }
+    if (!description) {
+      setDescriptionRequired("Description is required!");
+    } else {
+      setDescriptionRequired(null);
+    }
+    if (name && description) {
+      isValidForm = true;
+    }
+    return isValidForm;
+  };
   const handleReset = () => {
-    TagService.modifyTag({ tag }, idTag)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const isValid = validate();
+    if (isValid) {
+      tag.name = name;
+      tag.description = description;
+      TagService.modifyTag({ tag }, idTag)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
       <Row>
-        <Col xs={12} xl={8}>
+        <Col xs={12} xl={12}>
           <Card border="light" className="shadow-sm mb-4">
             <Card.Body className="pb-0">
-              <h5 className="mb-4">Tag</h5>
+              <h5 className="mb-4">Edit Tag</h5>
               <Form>
-                <Form.Group id="firstName" className="mb-4">
-                  <Form.Label>Name</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Text></InputGroup.Text>
-                    <Form.Control
-                      required
-                      type="text"
-                      value={tag ? tag.name : ""}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    <div className="text-start w-100 invalid-feedback d-block">
-                      {}
-                    </div>
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group id="lastName" className="mb-4">
-                  <Form.Label>Description</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Text></InputGroup.Text>
-                    <Form.Control
-                      required
-                      type="text"
-                      placeholder=""
-                      value={tag ? tag.description : ""}
-                      onChange={handleDescription}
-                    />
-                    <div className="text-start w-100 invalid-feedback d-block">
-                      {}
-                      {}
-                    </div>
-                  </InputGroup>
-                </Form.Group>
-
-                <Button
-                  variant="primary mb-1"
-                  type="button"
-                  className="w-100"
-                  onClick={handleReset}
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="primary"
-                  type="button"
-                  className="w-100"
-                  onClick={() => props.history.push("/tags")}
-                >
-                  Cancel
-                </Button>
+                <Row>
+                  <Col md={6} className="mb-3">
+                    <Form.Group id="firstName" className="mb-4">
+                      <Form.Label>Name</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text></InputGroup.Text>
+                        <Form.Control
+                          required
+                          type="text"
+                          value={tag.name || ""}
+                          onChange={handleName}
+                        />
+                        <div className="text-start w-100 invalid-feedback d-block">
+                          {nameRequired}
+                        </div>
+                      </InputGroup>
+                    </Form.Group>
+                  </Col>
+                  <Col md={6} className="mb-3">
+                    <Form.Group id="lastName" className="mb-4">
+                      <Form.Label>Description</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text></InputGroup.Text>
+                        <Form.Control
+                          required
+                          as="textarea"
+                          placeholder=""
+                          value={tag.description || ""}
+                          onChange={handleDescription}
+                        />
+                        <div className="text-start w-100 invalid-feedback d-block">
+                          {descriptionRequired}
+                        </div>
+                      </InputGroup>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <div className="mt-3 mb-1">
+                  <Button variant="primary" type="button" onClick={handleReset}>
+                    <i className="fa fa-save"></i> Save
+                  </Button>
+                  <Button
+                    variant="primary ms-1"
+                    type="button"
+                    onClick={() => props.history.push("/tags")}
+                  >
+                    {" "}
+                    <i className="fa fa-undo"></i> Cancel
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
