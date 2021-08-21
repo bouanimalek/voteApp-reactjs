@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
-import EventService from "../../services/event.services";
-import { Card, Button, Row, Col, Container } from "@themesberg/react-bootstrap";
+import HomeService from "../../services/home.services";
+import {
+  Card,
+  Button,
+  Row,
+  Col,
+  Container,
+  Badge,
+} from "@themesberg/react-bootstrap";
 import { useHistory, Link } from "react-router";
 
 const EventsShow = () => {
@@ -8,7 +15,7 @@ const EventsShow = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    EventService.getAllEvents()
+    HomeService.getAllEvents()
       .then((response) => {
         console.log(response.data);
         setEvents(response.data);
@@ -33,7 +40,6 @@ const EventsShow = () => {
                 style={{ cursor: "pointer" }}
                 border="light"
                 key={event._id}
-                className="mb-3"
                 onClick={handleEvent.bind(this, event._id)}
               >
                 <Card.Img variant="top" src={event.eventImage} />
@@ -43,7 +49,32 @@ const EventsShow = () => {
                       {event.name}
                     </Card.Link>
                   </Card.Title>
-                  <Card.Text>{event.description}</Card.Text>
+                  <Card.Text>
+                    {event.startDateTime} - {event.endDateTime}
+                  </Card.Text>
+                  {event.eventType !== "free" ? (
+                    <Card.Text>{event.price} €</Card.Text>
+                  ) : (
+                    <span style={{ color: "red", fontFamily: "sans-serif" }}>
+                      Free
+                    </span>
+                  )}
+
+                  <Card.Text>
+                    {event.author.firstname} {event.author.lastname}
+                  </Card.Text>
+                  <Card.Text>
+                    {event.tags.map((tag, index) => (
+                      <Badge
+                        pill
+                        bg="info"
+                        key={index}
+                        style={{ margin: "2px" }}
+                      >
+                        {tag.name}
+                      </Badge>
+                    ))}
+                  </Card.Text>
                   {/* <Button
                     variant="primary"
                     onClick={handleEvent.bind(this, event._id)}
