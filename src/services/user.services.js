@@ -120,6 +120,20 @@ const getAuthenticatedUserRole = () => {
     return null;
   }
 };
+
+const getAuthenticatedUser = () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const decoded = jwt_decode(token);
+    if (decoded) {
+      return decoded;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+};
 export default {
   getAllUsers,
   getUserById,
@@ -132,4 +146,5 @@ export default {
   getAuthenticatedUserId,
   isAuthenticated,
   getAuthenticatedUserRole,
+  getAuthenticatedUser,
 };
