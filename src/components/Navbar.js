@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
@@ -25,9 +25,15 @@ import { useHistory } from "react-router";
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 import authServices from "../services/auth.services";
+import UserService from "../services/user.services";
 
 export default (props) => {
   const history = useHistory();
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    const user = UserService.getAuthenticatedUser();
+    setUser(user);
+  }, []);
   const logoutHandler = () => {
     authServices
       .logout()
@@ -133,12 +139,12 @@ export default (props) => {
               <Dropdown.Toggle as={Nav.Link} className="pt-1 px-0">
                 <div className="media d-flex align-items-center">
                   <Image
-                    src={Profile3}
+                    src={user.avatar}
                     className="user-avatar md-avatar rounded-circle"
                   />
                   <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                     <span className="mb-0 font-small fw-bold">
-                      Bonnie Green
+                      {user.firstname + " " + user.lastname}
                     </span>
                   </div>
                 </div>
