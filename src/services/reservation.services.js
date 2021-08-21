@@ -1,4 +1,5 @@
 import axios from "axios";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 // create reservation
 const createReservation = (idEvent) => {
@@ -8,4 +9,4 @@ const createReservation = (idEvent) => {
   });
 };
 
-export default createReservation;
+export default { createReservation };
