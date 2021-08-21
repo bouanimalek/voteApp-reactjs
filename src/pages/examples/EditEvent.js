@@ -35,6 +35,7 @@ import { ChoosePhotoWidget, ProfileCardWidget } from "../../components/Widgets";
 import { GeneralInfoForm } from "../../components/Forms";
 import EventService from "../../services/event.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
+import EventImage from "../../assets/img/events.jpg";
 import { useParams } from "react-router-dom";
 
 export default (props) => {
@@ -325,7 +326,11 @@ export default (props) => {
                   <h5 className="mb-4">Select event photo</h5>
                   <div className="d-xl-flex align-items-center">
                     <div className="user-avatar xl-avatar">
-                      <Image fluid rounded src={Profile3} />
+                      <Image
+                        fluid
+                        rounded
+                        src={image ? URL.createObjectURL(image) : EventImage}
+                      />
                     </div>
                     <div className="file-field">
                       <div className="d-flex justify-content-xl-center ms-xl-3">

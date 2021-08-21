@@ -9,6 +9,7 @@ import {
   Badge,
 } from "@themesberg/react-bootstrap";
 import { useHistory, Link } from "react-router";
+import "../../../src/test.css";
 
 const EventsShow = () => {
   let history = useHistory();
@@ -41,6 +42,7 @@ const EventsShow = () => {
                 border="light"
                 key={event._id}
                 onClick={handleEvent.bind(this, event._id)}
+                className="test"
               >
                 <Card.Img variant="top" src={event.eventImage} />
                 <Card.Body>

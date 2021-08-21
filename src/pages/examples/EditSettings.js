@@ -33,6 +33,7 @@ import {
 } from "@themesberg/react-bootstrap";
 
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
+import Avatar from "../../assets/img/avatar.jpg";
 
 export default () => {
   useEffect(() => {
@@ -373,7 +374,11 @@ export default () => {
                   <h5 className="mb-4">Select profile photo </h5>
                   <div className="d-xl-flex align-items-center">
                     <div className="user-avatar xl-avatar">
-                      <Image fluid rounded src={Profile3} />
+                      <Image
+                        fluid
+                        rounded
+                        src={image ? URL.createObjectURL(image) : Avatar}
+                      />
                     </div>
                     <div className="file-field">
                       <div className="d-flex justify-content-xl-center ms-xl-3">
