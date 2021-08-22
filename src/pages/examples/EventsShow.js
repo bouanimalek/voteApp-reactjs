@@ -57,7 +57,9 @@ const EventsShow = () => {
                   {event.eventType !== "free" ? (
                     <Card.Text>{event.price} €</Card.Text>
                   ) : (
-                    <span style={{ color: "red", fontFamily: "sans-serif" }}>
+                    <span
+                      style={{ color: "#eb2f06", fontFamily: "sans-serif" }}
+                    >
                       Free
                     </span>
                   )}
