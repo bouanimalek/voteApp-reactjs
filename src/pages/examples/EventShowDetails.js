@@ -7,6 +7,7 @@ import {
   Card,
   Button,
   Container,
+  Spinner,
 } from "@themesberg/react-bootstrap";
 import EventService from "../../services/event.services";
 import ReservationService from "../../services/reservation.services";
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 const EventShowDetails = () => {
   const { idEvent } = useParams();
   const [event, setEvent] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   useEffect(() => {
     EventService.getEventById(idEvent)
@@ -28,9 +30,11 @@ const EventShowDetails = () => {
   }, []);
 
   const handleReservation = (idEvent) => {
+    setIsLoaded(false);
     ReservationService.createReservation(idEvent)
       .then((response) => {
         console.log(response);
+        setIsLoaded(true);
         toast.success(
           "Thank you for your resevation! Please check your email!"
         );
@@ -65,7 +69,11 @@ const EventShowDetails = () => {
                 variant="primary"
                 onClick={handleReservation.bind(this, idEvent)}
               >
-                Make reservation
+                {!isLoaded ? (
+                  <Spinner animation="border" variant="white" />
+                ) : (
+                  "Make reservation"
+                )}
               </Button>
             </Card.Body>
           </Card>
