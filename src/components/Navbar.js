@@ -30,10 +30,15 @@ import UserService from "../services/user.services";
 export default (props) => {
   const history = useHistory();
   const [user, setUser] = useState([]);
+
   useEffect(() => {
     const user = UserService.getAuthenticatedUser();
     setUser(user);
   }, []);
+
+  const handleSettings = () => {
+    history.push("/users/settings");
+  };
   const logoutHandler = () => {
     authServices
       .logout()
@@ -154,7 +159,7 @@ export default (props) => {
                   <FontAwesomeIcon icon={faUserCircle} className="me-2" /> My
                   Profile
                 </Dropdown.Item>
-                <Dropdown.Item className="fw-bold">
+                <Dropdown.Item className="fw-bold" onClick={handleSettings}>
                   <FontAwesomeIcon icon={faCog} className="me-2" /> Settings
                 </Dropdown.Item>
                 <Dropdown.Item className="fw-bold">
