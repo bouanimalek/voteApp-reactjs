@@ -61,6 +61,7 @@ export default (props) => {
             //console.log(response);
             // Swal.fire("User Deleted!", "", "success");
             setUsers(users);
+            toast.success("User deleted successfully!");
             refreshList();
           })
           .catch((error) => {
