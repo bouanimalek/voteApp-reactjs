@@ -41,7 +41,8 @@ const EventShowDetails = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Internal server error");
+        setIsLoaded(true);
+        toast.error("Can not make reservation! Tickets are sold out!");
       });
   };
   return (
