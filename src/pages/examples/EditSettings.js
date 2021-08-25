@@ -20,6 +20,7 @@ import {
   faStore,
   faUserPlus,
   faPaperclip,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Col,
@@ -136,70 +137,7 @@ export default () => {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-        <Dropdown>
-          <Dropdown.Toggle
-            as={Button}
-            variant="secondary"
-            className="text-dark me-2"
-          >
-            <FontAwesomeIcon icon={faPlus} className="me-2" />
-            <span>New</span>
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-2">
-            <Dropdown.Item>
-              <FontAwesomeIcon icon={faFileAlt} className="me-2" /> Document
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <FontAwesomeIcon icon={faCommentDots} className="me-2" /> Message
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <FontAwesomeIcon icon={faBoxOpen} className="me-2" /> Product
-            </Dropdown.Item>
-
-            <Dropdown.Divider />
-
-            <Dropdown.Item>
-              <FontAwesomeIcon icon={faRocket} className="text-danger me-2" />{" "}
-              Subscription Plan
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <div className="d-flex">
-          <Dropdown>
-            <Dropdown.Toggle as={Button} variant="primary">
-              <FontAwesomeIcon icon={faClipboard} className="me-2" /> Reports
-              <span className="icon icon-small ms-1">
-                <FontAwesomeIcon icon={faChevronDown} />
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-1">
-              <Dropdown.Item>
-                <FontAwesomeIcon icon={faBoxOpen} className="me-2" /> Products
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <FontAwesomeIcon icon={faStore} className="me-2" /> Customers
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <FontAwesomeIcon icon={faCartArrowDown} className="me-2" />{" "}
-                Orders
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <FontAwesomeIcon icon={faChartPie} className="me-2" /> Console
-              </Dropdown.Item>
-
-              <Dropdown.Divider />
-
-              <Dropdown.Item>
-                <FontAwesomeIcon
-                  icon={faRocket}
-                  className="text-success me-2"
-                />{" "}
-                All Reports
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+        <div className="d-flex"></div>
       </div>
 
       <Row>
@@ -256,8 +194,8 @@ export default () => {
                               required
                               type="text"
                               value={
-                                birthday
-                                  ? moment(birthday).format("DD/MM/YYYY")
+                                user
+                                  ? moment(user.birthDate).format("DD/MM/YYYY")
                                   : ""
                               }
                               placeholder="dd/mm/yyyy"
@@ -352,18 +290,15 @@ export default () => {
                     {user ? user.firstname + " " + user.lastname : "Neil Sims"}
                   </Card.Title>
                   <Card.Subtitle className="fw-normal">
-                    Senior Software Engineer
+                    {user ? user.email : ""}
                   </Card.Subtitle>
                   <Card.Text className="text-gray mb-4">
-                    New York, USA
+                    {user ? user.address : ""}
                   </Card.Text>
 
                   <Button variant="primary" size="sm" className="me-2">
-                    <FontAwesomeIcon icon={faUserPlus} className="me-1" />{" "}
-                    Connect
-                  </Button>
-                  <Button variant="secondary" size="sm">
-                    Send Message
+                    <FontAwesomeIcon icon={faUser} className="me-1" />{" "}
+                    {user ? user.role.toUpperCase() : ""}
                   </Button>
                 </Card.Body>
               </Card>
