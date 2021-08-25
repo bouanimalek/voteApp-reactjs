@@ -9,6 +9,7 @@ import {
   Badge,
 } from "@themesberg/react-bootstrap";
 import { useHistory, Link } from "react-router";
+import moment from "moment";
 import "../../../src/test.css";
 
 const EventsShow = () => {
@@ -52,7 +53,12 @@ const EventsShow = () => {
                     </Card.Link>
                   </Card.Title>
                   <Card.Text>
-                    {event.startDateTime} - {event.endDateTime}
+                    <u>Start Date</u>:
+                    {` ${moment(event.startDateTime).format(
+                      "DD/MM/YYYY hh:mm"
+                    )}`}{" "}
+                    - <u>End Date</u>:{" "}
+                    {` ${moment(event.endDateTime).format("DD/MM/YYYY hh:mm")}`}
                   </Card.Text>
                   {event.eventType !== "free" ? (
                     <Card.Text>{event.price} €</Card.Text>
