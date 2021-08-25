@@ -35,6 +35,7 @@ import { GeneralInfoForm } from "../../components/Forms";
 import UserService from "../../services/user.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default (props) => {
   const [user, setUser] = useState({});
@@ -144,9 +145,11 @@ export default (props) => {
     UserService.modifyUser(userData, idUser)
       .then((response) => {
         console.log(response);
+        toast.success("User modified successfully!");
       })
       .catch((error) => {
         console.log(error);
+        toast.error("Internal server error");
       });
   };
   return (
@@ -281,8 +284,8 @@ export default (props) => {
                             required
                             type="text"
                             value={
-                              birthday
-                                ? moment(birthday).format("DD/MM/YYYY")
+                              user
+                                ? moment(user.birthDate).format("DD/MM/YYYY")
                                 : ""
                             }
                             placeholder="dd/mm/yyyy"
