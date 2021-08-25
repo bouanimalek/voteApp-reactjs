@@ -71,16 +71,16 @@ export const AddEventForm = () => {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-      // hour: "numeric",
-      // minute: "numeric",
+      hour: "numeric",
+      minute: "numeric",
     }
   );
   const endDateTime = new Date(endDate.valueOf()).toLocaleDateString("fr-CA", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-    // hour: "numeric",
-    // minute: "numeric",
+    hour: "numeric",
+    minute: "numeric",
   });
 
   const data = new FormData();
