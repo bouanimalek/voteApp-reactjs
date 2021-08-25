@@ -123,11 +123,7 @@ export default (props = {}) => {
         variant="dark"
         className="navbar-theme-primary px-4 d-md-none"
       >
-        <Navbar.Brand
-          className="me-lg-5"
-          as={Link}
-          to={Routes.DashboardOverview.path}
-        >
+        <Navbar.Brand className="me-lg-5" as={Link} to={Routes.Dashboard.path}>
           <Image src={ReactHero} className="navbar-brand-light" />
         </Navbar.Brand>
         <Navbar.Toggle
@@ -174,14 +170,8 @@ export default (props = {}) => {
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem
-                title="Volt React"
-                link={Routes.Presentation.path}
-                image={ReactHero}
-              />
-
-              <NavItem
-                title="Overview"
-                link={Routes.DashboardOverview.path}
+                title="Dashboard"
+                link={Routes.Dashboard.path}
                 icon={faChartPie}
               />
               <NavItem
