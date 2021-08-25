@@ -22,18 +22,18 @@ import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
 
 import AddEvent from "./examples/AddEvent";
-import ListUsers from "./examples/ListUsers";
+import Users from "./examples/Users";
 import EditUser from "./examples/EditUser";
-import ListTags from "./examples/ListTags";
+import Tags from "./examples/Tags";
 import AddTag from "./examples/AddTag";
 import EditTag from "./examples/EditTag";
-import ListEvents from "./examples/ListEvents";
 import EditEvent from "./examples/EditEvent";
-import ListTickets from "./examples/ListTickets";
+import Tickets from "./examples/Tickets";
 import UserService from "../services/user.services";
 import EditSettings from "./examples/EditSettings";
 import EventsShow from "./examples/EventsShow";
 import EventShowDetails from "./examples/EventShowDetails";
+import Events from "./examples/Events";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -132,7 +132,7 @@ export default () => (
     {/* pages */}
     <RouteWithSidebar
       exact
-      path={Routes.DashboardOverview.path}
+      path={Routes.Dashboard.path}
       component={DashboardOverview}
     />
 
@@ -147,7 +147,7 @@ export default () => (
       component={EditSettings}
     />
     <RouteWithSidebar exact path={Routes.AddEvent.path} component={AddEvent} />
-    <RouteWithSidebar exact path={Routes.Events.path} component={ListEvents} />
+    <RouteWithSidebar exact path={Routes.Events.path} component={Events} />
     <RouteWithSidebar
       exact
       path={Routes.EventsShow.path}
@@ -163,14 +163,10 @@ export default () => (
       path={Routes.EditEvent.path}
       component={EditEvent}
     />
-    <RouteWithSidebar
-      exact
-      path={Routes.Tickets.path}
-      component={ListTickets}
-    />
-    <RouteWithSidebar exact path={Routes.Users.path} component={ListUsers} />
+    <RouteWithSidebar exact path={Routes.Tickets.path} component={Tickets} />
+    <RouteWithSidebar exact path={Routes.Users.path} component={Users} />
     <RouteWithSidebar exact path={Routes.EditUser.path} component={EditUser} />
-    <RouteWithSidebar exact path={Routes.Tags.path} component={ListTags} />
+    <RouteWithSidebar exact path={Routes.Tags.path} component={Tags} />
     <RouteWithSidebar exact path={Routes.AddTag.path} component={AddTag} />
     <RouteWithSidebar exact path={Routes.EditTag.path} component={EditTag} />
 
