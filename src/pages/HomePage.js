@@ -4,7 +4,7 @@ import { Routes } from "../routes";
 
 // pages
 
-import DashboardOverview from "./dashboard/DashboardOverview";
+import DashboardOverview from "./dashboard/Dashboard";
 
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
@@ -63,19 +63,6 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const localStorageIsSettingsVisible = () => {
-    return localStorage.getItem("settingsVisible") === "false" ? false : true;
-  };
-
-  const [showSettings, setShowSettings] = useState(
-    localStorageIsSettingsVisible
-  );
-
-  const toggleSettings = () => {
-    setShowSettings(!showSettings);
-    localStorage.setItem("settingsVisible", !showSettings);
-  };
-
   return (
     <Route
       {...rest}
@@ -88,10 +75,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
             <main className="content">
               <Navbar />
               <Component {...props} />
-              <Footer
-                toggleSettings={toggleSettings}
-                showSettings={showSettings}
-              />
+              <Footer />
             </main>
           </>
         ) : (
