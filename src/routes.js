@@ -1,15 +1,10 @@
 export const Routes = {
   // pages
   Dashboard: { path: "/dashboard" },
-  Transactions: { path: "/transactions" },
-
-  Billing: { path: "/examples/billing" },
-  Invoice: { path: "/examples/invoice" },
   Signin: { path: "/sign-in" },
   Signup: { path: "/sign-up" },
   ForgotPassword: { path: "/forgot-password" },
   ResetPassword: { path: "/reset-password/:token" },
-  Lock: { path: "/examples/lock" },
   NotFound: { path: "/404" },
   ServerError: { path: "/500" },
   AddEvent: { path: "/events/create" },
