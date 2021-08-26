@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
   faCog,
-  faHandHoldingUsd,
+  faStream,
   faSignOutAlt,
   faTimes,
   faUsers,
@@ -177,7 +177,7 @@ export default (props = {}) => {
               <NavItem
                 title="Events"
                 link={Routes.EventsShow.path}
-                icon={faChartPie}
+                icon={faStream}
               />
 
               <NavItem
