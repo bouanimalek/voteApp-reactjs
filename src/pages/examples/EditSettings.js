@@ -37,21 +37,25 @@ import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import Avatar from "../../assets/img/avatar.jpg";
 
 export default () => {
-  useEffect(() => {
-    const idUser = UserService.getAuthenticatedUserId();
-    UserService.getUserById(idUser).then((response) => {
-      setUser(response.data);
-    });
-  }, []);
-
   const [user, setUser] = useState();
   const [birthday, setBirthday] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [phone, setPhone] = useState(Number);
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
   const [image, setImage] = useState("");
+
+  useEffect(() => {
+    refreshList();
+  }, []);
+
+  const refreshList = () => {
+    const idUser = UserService.getAuthenticatedUserId();
+    UserService.getUserById(idUser)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   // validation
   const [firstnameRequired, setFirstnameRequired] = useState("");
   const [lastnameRequired, setLastnameRequired] = useState("");
@@ -71,52 +75,63 @@ export default () => {
     }
   );
 
-  const data = new FormData();
-  data.append("firstname", firstname);
-  data.append("lastname", lastname);
-  data.append("birthday", birthdayDate);
-  data.append("phone", phone);
-  data.append("email", email);
-  data.append("address", address);
-  data.append("images", image);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
+  };
 
   const validate = () => {
     let isValidForm = false;
-    if (!firstname) {
+    if (!user.firstname) {
       setFirstnameRequired("First name is required!");
     } else {
       setFirstnameRequired(null);
     }
-    if (!lastname) {
+    if (!user.lastname) {
       setLastnameRequired("Lastname is required!");
     } else {
       setLastnameRequired(null);
     }
-    if (!phone) {
+    if (!user.phone) {
       setPhoneRequired("Phone is required!");
     } else {
       setPhoneRequired(null);
     }
-    if (!email) {
+    if (!user.email) {
       setEmailRequired("Email is required!");
     } else {
       setEmailRequired(null);
     }
-    if (!address) {
-      setAddressRequired("Address name is required!");
+    if (!user.address) {
+      setAddressRequired("Address is required!");
     } else {
       setAddressRequired(null);
     }
-    if (!image) {
-      setImageRequired("Image is required!");
-    } else {
-      setImageRequired(null);
-    }
-    if (firstname && lastname && phone && email && address && image) {
+    // if (!image) {
+    //   setImageRequired("Image is required!");
+    // } else {
+    //   setImageRequired(null);
+    // }
+    if (
+      user.firstname &&
+      user.lastname &&
+      user.phone &&
+      user.email &&
+      user.address
+    ) {
       isValidForm = true;
     }
     return isValidForm;
   };
+
+  const data = new FormData();
+  data.append("firstname", user ? user.firstname : "");
+  data.append("lastname", user ? user.lastname : "");
+  data.append("birthday", birthdayDate);
+  data.append("phone", user ? user.phone : "");
+  data.append("email", user ? user.email : "");
+  data.append("address", user ? user.address : "");
+  data.append("images", image);
 
   const handleSave = () => {
     const isValid = validate();
@@ -126,6 +141,7 @@ export default () => {
         .then((response) => {
           console.log(response);
           toast.success("User modified successfully!");
+          refreshList();
         })
         .catch((error) => {
           console.log(error);
@@ -155,7 +171,8 @@ export default () => {
                         type="text"
                         placeholder="Enter your first name"
                         value={user ? user.firstname : ""}
-                        onChange={(e) => setFirstname(e.target.value)}
+                        name="firstname"
+                        onChange={handleInputChange}
                       />
                       <div className="text-start w-100 invalid-feedback d-block">
                         {firstnameRequired}
@@ -170,7 +187,8 @@ export default () => {
                         type="text"
                         placeholder="Also your last name"
                         value={user ? user.lastname : ""}
-                        onChange={(e) => setLastname(e.target.value)}
+                        name="lastname"
+                        onChange={handleInputChange}
                       />
                       <div className="text-start w-100 invalid-feedback d-block">
                         {lastnameRequired}
@@ -215,7 +233,8 @@ export default () => {
                         type="number"
                         placeholder="+12-345 678 910"
                         value={user ? user.phone : ""}
-                        onChange={(e) => setPhone(e.target.value)}
+                        name="phone"
+                        onChange={handleInputChange}
                       />
                       <div className="text-start w-100 invalid-feedback d-block">
                         {phoneRequired}
@@ -234,7 +253,8 @@ export default () => {
                         type="email"
                         placeholder="name@company.com"
                         value={user ? user.email : ""}
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        onChange={handleInputChange}
                       />
                       <div className="text-start w-100 invalid-feedback d-block">
                         {emailRequired}
@@ -253,7 +273,8 @@ export default () => {
                         as="textarea"
                         placeholder="Enter your home address"
                         value={user ? user.address : ""}
-                        onChange={(e) => setAddress(e.target.value)}
+                        name="address"
+                        onChange={handleInputChange}
                       />
                       <div className="text-start w-100 invalid-feedback d-block">
                         {addressRequired}
