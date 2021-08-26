@@ -26,11 +26,11 @@ export default (props) => {
   const currentYear = moment().get("year");
 
   return (
-    <div>
-      <footer className="footer section py-5 ">
+    <div className="d-flex justify-content-center ">
+      <footer>
         <Row>
-          <Col xs={12} lg={12} className="mb-4 mb-lg-0">
-            <p className="mb-0 text-center text-xl-left">
+          <Col xs={12} lg={12} className="mb-4 mb-lg-0 d-flex">
+            <p className="mb-0 text-center text-xl-left mt-auto">
               Copyright © 2021-{`${currentYear} `}
               <Card.Link
                 href="https://fivepoints.fr"
