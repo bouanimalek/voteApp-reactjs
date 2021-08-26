@@ -61,7 +61,7 @@ export default (props) => {
         .then((response) => {
           toast.success(response.data.message);
           localStorage.setItem("token", response.data.token);
-          props.history.push("/dashboard/overview");
+          props.history.push("/dashboard");
         })
         .catch((error) => {
           console.log(error);
