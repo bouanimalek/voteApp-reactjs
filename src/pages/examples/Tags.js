@@ -100,6 +100,16 @@ export default (props) => {
                 <Col sm={10}>
                   <h5 className="mb-4">List Tags</h5>
                 </Col>
+                <Col sm={2}>
+                  <Button
+                    className="float-end"
+                    variant="info mb-4"
+                    type="button"
+                    onClick={() => props.history.push("/tags/create")}
+                  >
+                    <i className="fa fa-plus"></i> Add New Tag
+                  </Button>
+                </Col>
               </Row>
               <Datatable
                 tableHeaders={header}
