@@ -107,7 +107,7 @@ export default (props) => {
             <Card.Body className="pb-0">
               <Row>
                 <Col sm={10}>
-                  <h5 className="mb-4">List Users</h5>
+                  <h5 className="mb-4">List Tickets</h5>
                 </Col>
               </Row>
               <Datatable
