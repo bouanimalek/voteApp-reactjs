@@ -21,7 +21,6 @@ export default (props) => {
   useEffect(() => {
     TicketService.getAllTickets()
       .then((response) => {
-        console.log(response.data);
         setTickets(response.data);
       })
       .catch((error) => {

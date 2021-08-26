@@ -19,7 +19,6 @@ const EventsShow = () => {
   useEffect(() => {
     HomeService.getAllEvents()
       .then((response) => {
-        console.log(response.data);
         setEvents(response.data);
       })
       .catch((error) => {

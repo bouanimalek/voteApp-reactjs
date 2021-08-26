@@ -20,7 +20,6 @@ export default (props) => {
   useEffect(() => {
     TagService.getAllTags()
       .then((response) => {
-        console.log(response.data);
         setTags(response.data);
       })
       .catch((error) => {
@@ -97,10 +96,10 @@ export default (props) => {
           <Card border="light" className="shadow-sm mb-4">
             <Card.Body className="pb-0">
               <Row>
-                <Col sm={10}>
+                <Col sm={9}>
                   <h5 className="mb-4">List Tags</h5>
                 </Col>
-                <Col sm={2}>
+                <Col sm={3}>
                   <Button
                     className="float-end"
                     variant="info mb-4"
