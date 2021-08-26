@@ -32,8 +32,16 @@ export default (props) => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
-    const user = UserService.getAuthenticatedUser();
-    setUser(user);
+    // const user = UserService.getAuthenticatedUser();
+    // setUser(user);
+    const userId = UserService.getAuthenticatedUserId();
+    UserService.getUserById(userId)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleSettings = () => {
