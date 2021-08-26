@@ -37,6 +37,7 @@ import EventService from "../../services/event.services";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import EventImage from "../../assets/img/events.jpg";
 import { useParams } from "react-router-dom";
+import TagService from "../../services/tag.services";
 
 export default (props) => {
   const [event, setEvent] = useState({});
@@ -59,12 +60,30 @@ export default (props) => {
   const [imageRequired, setImageRequired] = useState("");
   const [locationRequired, setLocationRequired] = useState("");
   const [eventTypeRequired, setEventTypeRequired] = useState("");
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
+    TagService.getAllTags()
+      .then((response) => {
+        console.log(response.data);
+        const tagOptions = response.data.map((tag) => {
+          return { value: tag._id, label: tag.name };
+        });
+        console.log(tagOptions);
+        setTags(tagOptions);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     EventService.getEventById(idEvent)
       .then((response) => {
         console.log(response.data);
-        setEvent(response.data);
+        const tagOptions = response.data.tags.map((tag) => {
+          return { value: tag._id, label: tag.name };
+        });
+        const eventData = response.data;
+        eventData["tags"] = tagOptions;
+        setEvent(eventData);
       })
       .catch((error) => {
         console.log(error);
@@ -89,93 +108,81 @@ export default (props) => {
     // minute: "numeric",
   });
 
-  const data = new FormData();
-  data.append("name", name);
-  data.append("description", description);
-  data.append("price", price);
-  data.append("availableTicketNumber", availableTicketNumber);
-  data.append("location", location);
-  data.append("startDateTime", startDateTime);
-  data.append("endDateTime", endDateTime);
-  data.append("images", image);
-  //data.append("tags", JSON.stringify(tag_));
-  data.append("eventType", eventType);
-
-  const handleName = (e) => {
-    setName(e.target.value);
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setEvent({ ...event, [name]: value });
   };
 
-  const handleDescription = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleLocation = (e) => {
-    setLocation(e.target.value);
-  };
-
-  const handlePrice = (e) => {
-    setPrice(e.target.value);
-  };
-
-  const handleAvailableTicketNumber = (e) => {
-    setAvailableTicketNumber(e.target.value);
+  const handleChangeTag = (options) => {
+    setEvent({ ...event, ["tags"]: options });
   };
 
   const validate = () => {
     let isValidForm = false;
-    if (!name) {
+    if (!event.name) {
       setNameRequired("Name is required!");
     } else {
       setNameRequired(null);
     }
-    if (!description) {
+    if (!event.description) {
       setDescriptionRequired("Description is required!");
     } else {
       setDescriptionRequired(null);
     }
-    if (!price) {
+    if (!event.price) {
       setPriceRequired("Price is required!");
     } else {
       setPriceRequired(null);
     }
-    if (!availableTicketNumber) {
+    if (!event.availableTicketNumber) {
       setAvailableTicketNumberRequired("Available tickets is required!");
     } else {
       setAvailableTicketNumberRequired(null);
     }
-    if (!image) {
-      setImageRequired("Image is required!");
-    } else {
-      setImageRequired(null);
-    }
-    if (!location) {
+    // if (!image) {
+    //   setImageRequired("Image is required!");
+    // } else {
+    //   setImageRequired(null);
+    // }
+    if (!event.location) {
       setLocationRequired("Address is required!");
     } else {
       setLocationRequired(null);
     }
-    if (!eventType) {
+    if (!event.eventType) {
       setEventTypeRequired("Event type is required!");
     } else {
       setEventTypeRequired(null);
     }
     if (
-      name &&
-      description &&
-      price &&
-      availableTicketNumber &&
-      image &&
-      location &&
-      eventType
+      event.name &&
+      event.description &&
+      event.price &&
+      event.availableTicketNumber &&
+      event.location &&
+      event.eventType
     ) {
       isValidForm = true;
     }
     return isValidForm;
   };
 
+  const data = new FormData();
+  data.append("name", event.name);
+  data.append("description", event.description);
+  data.append("price", event.price);
+  data.append("availableTicketNumber", event.availableTicketNumber);
+  data.append("location", event.location);
+  data.append("startDateTime", startDateTime);
+  data.append("endDateTime", endDateTime);
+  data.append("images", image);
+  data.append("tags", JSON.stringify(event.tags));
+  data.append("eventType", event.eventType);
+
   const handleReset = () => {
     const isValid = validate();
     if (isValid) {
-      EventService.modifyEvent(event, idEvent)
+      EventService.modifyEvent(data, idEvent)
         .then((response) => {
           console.log(response);
         })
@@ -198,7 +205,8 @@ export default (props) => {
                   type="text"
                   placeholder="Enter your event name"
                   value={event ? event.name : ""}
-                  onChange={(e) => setName(e.target.value)}
+                  name="name"
+                  onChange={handleChangeInput}
                 />
                 <div className="text-start w-100 invalid-feedback d-block">
                   {nameRequired}
@@ -213,7 +221,8 @@ export default (props) => {
                   as="textarea"
                   placeholder="Enter event description"
                   value={event ? event.description : ""}
-                  onChange={(e) => setDescription(e.target.value)}
+                  name="description"
+                  onChange={handleChangeInput}
                 />
                 <div className="text-start w-100 invalid-feedback d-block">
                   {descriptionRequired}
@@ -298,7 +307,8 @@ export default (props) => {
                   type="number"
                   placeholder="12 €"
                   value={event ? event.price : ""}
-                  onChange={(e) => setPrice(e.target.value)}
+                  name="price"
+                  onChange={handleChangeInput}
                 />
                 <div className="text-start w-100 invalid-feedback d-block">
                   {priceRequired}
@@ -313,7 +323,8 @@ export default (props) => {
                   type="number"
                   placeholder="0"
                   value={event ? event.availableTicketNumber : ""}
-                  onChange={(e) => setAvailableTicketNumber(e.target.value)}
+                  name="availableTicketNumber"
+                  onChange={handleChangeInput}
                 />
                 <div className="text-start w-100 invalid-feedback d-block">
                   {availableTicketNumberRequired}
@@ -371,7 +382,8 @@ export default (props) => {
                   as="textarea"
                   placeholder="Enter your home address"
                   value={event ? event.location : ""}
-                  onChange={(e) => setLocation(e.target.value)}
+                  name="location"
+                  onChange={handleChangeInput}
                 />
                 <div className="text-start w-100 invalid-feedback d-block">
                   {locationRequired}
@@ -383,8 +395,9 @@ export default (props) => {
                 <Form.Label>Type</Form.Label>
                 <Form.Select
                   aria-label="Default select example"
-                  defaultValue={event ? event.type : ""}
-                  onChange={(e) => setEventType(e.target.value)}
+                  value={event ? event.type : ""}
+                  name="type"
+                  onChange={handleChangeInput}
                 >
                   <option value="free" selected>
                     Free
@@ -399,7 +412,12 @@ export default (props) => {
             <Col md={6} className="mb-3">
               <Form.Group id="type" className="mb-4">
                 <Form.Label>Tags</Form.Label>
-                <Select isMulti value={event.tags} />
+                <Select
+                  isMulti
+                  value={event.tags}
+                  options={tags}
+                  onChange={handleChangeTag}
+                />
               </Form.Group>
             </Col>
           </Row>
