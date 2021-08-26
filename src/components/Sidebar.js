@@ -181,12 +181,6 @@ export default (props = {}) => {
               />
 
               <NavItem
-                title="Transactions"
-                icon={faHandHoldingUsd}
-                link={Routes.Transactions.path}
-              />
-
-              <NavItem
                 title="Manage Users"
                 icon={faUsers}
                 link={Routes.Users.path}

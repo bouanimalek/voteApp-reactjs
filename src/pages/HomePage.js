@@ -5,7 +5,6 @@ import { Routes } from "../routes";
 // pages
 
 import DashboardOverview from "./dashboard/DashboardOverview";
-import Transactions from "./Transactions";
 
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
@@ -136,11 +135,6 @@ export default () => (
       component={DashboardOverview}
     />
 
-    <RouteWithSidebar
-      exact
-      path={Routes.Transactions.path}
-      component={Transactions}
-    />
     <RouteWithSidebar
       exact
       path={Routes.EditSettings.path}
