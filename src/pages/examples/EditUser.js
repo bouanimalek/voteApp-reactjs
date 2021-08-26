@@ -66,8 +66,7 @@ export default (props) => {
   }, []);
 
   const handleFirstName = (e) => {
-    const namee = e.target.value;
-    setFirstName(namee);
+    setFirstName({ ...firstName, firstName: e.target.value });
   };
 
   const handleLastName = (e) => {
@@ -80,6 +79,11 @@ export default (props) => {
 
   const handleUserRole = (e) => {
     setRole(e.target.value);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
   };
 
   const birthdayDate = new Date(birthday.valueOf()).toLocaleDateString(
@@ -97,43 +101,49 @@ export default (props) => {
 
   const validate = () => {
     let isValidForm = false;
-    if (!firstName) {
+    if (!user.firstname) {
       setFirstNameRequired("Firstname is required!");
     } else {
       setFirstNameRequired(null);
     }
-    if (!lastName) {
+    if (!user.lastname) {
       setLastNameRequired("Lastname is required!");
     } else {
       setLastNameRequired(null);
     }
-    if (!phone) {
+    if (!user.phone) {
       setPhoneRequired("Phone is required!");
     } else {
       setPhoneRequired(null);
     }
-    if (!email) {
+    if (!user.email) {
       setEmailRequired("Email is required!");
     } else {
       setEmailRequired(null);
     }
-    if (!address) {
+    if (!user.address) {
       setAddressRequired("Address is required!");
     } else {
       setAddressRequired(null);
     }
-    if (firstName && lastName && phone && email && address) {
+    if (
+      user.firstname &&
+      user.lastName &&
+      user.phone &&
+      user.email &&
+      user.address
+    ) {
       isValidForm = true;
     }
     return isValidForm;
   };
   const handleReset = () => {
     const userData = new FormData();
-    userData.append("firstname", firstName);
-    userData.append("lastname", lastName);
-    userData.append("phone", phone);
-    userData.append("email", email);
-    userData.append("address", address);
+    userData.append("firstname", user.firstname);
+    userData.append("lastname", user.lastname);
+    userData.append("phone", user.phone);
+    userData.append("email", user.email);
+    userData.append("address", user.address);
     userData.append("birthDate", birthdayDate);
     if (authUserRole === "admin") {
       userData.append("role", role);
@@ -168,7 +178,8 @@ export default (props) => {
                       type="text"
                       placeholder="Enter your first name"
                       value={user ? user.firstname : ""}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      name="firstname"
+                      onChange={handleInputChange}
                     />
                     <div className="text-start w-100 invalid-feedback d-block">
                       {firstNameRequired}
@@ -183,7 +194,8 @@ export default (props) => {
                       type="text"
                       placeholder="Also your last name"
                       value={user ? user.lastname : ""}
-                      onChange={(e) => setLastName(e.target.value)}
+                      name="lastname"
+                      onChange={handleInputChange}
                     />
                     <div className="text-start w-100 invalid-feedback d-block">
                       {lastNameRequired}
@@ -199,8 +211,9 @@ export default (props) => {
                       required
                       type="email"
                       placeholder="name@company.com"
-                      value={user.email || ""}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={user ? user.email : ""}
+                      name="email"
+                      onChange={handleInputChange}
                     />
                     <div className="text-start w-100 invalid-feedback d-block">
                       {emailRequired}
@@ -214,7 +227,8 @@ export default (props) => {
                       required
                       type="password"
                       value=""
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
+                      onChange={handleInputChange}
                     />
                   </Form.Group>
                 </Col>
@@ -228,7 +242,8 @@ export default (props) => {
                       type="number"
                       placeholder="+12-345 678 910"
                       value={user ? user.phone : ""}
-                      onChange={(e) => setPhone(e.target.value)}
+                      name="phone"
+                      onChange={handleInputChange}
                     />
                     <div className="text-start w-100 invalid-feedback d-block">
                       {phoneRequired}
@@ -242,7 +257,8 @@ export default (props) => {
                       aria-label="Default select example"
                       disabled={authUserRole === "admin" ? false : true}
                       defaultValue={user ? user.role : ""}
-                      onChange={(e) => setRole(e.target.value)}
+                      name="role"
+                      onChange={handleInputChange}
                     >
                       <option value="admin">Admin</option>
                       <option value="user" selected>
@@ -262,7 +278,8 @@ export default (props) => {
                       as="textarea"
                       placeholder="Enter your home address"
                       value={user ? user.address : ""}
-                      onChange={(e) => setAddress(e.target.value)}
+                      name="address"
+                      onChange={handleInputChange}
                     />
                     <div className="text-start w-100 invalid-feedback d-block">
                       {addressRequired}
@@ -288,6 +305,7 @@ export default (props) => {
                                 ? moment(user.birthDate).format("DD/MM/YYYY")
                                 : ""
                             }
+                            name="birthDate"
                             placeholder="dd/mm/yyyy"
                             onFocus={openCalendar}
                             onChange={() => {}}
@@ -301,14 +319,14 @@ export default (props) => {
 
               <div className="mt-3">
                 <Button variant="primary" type="button" onClick={handleReset}>
-                  Save All
+                  <i className="fa fa-save"></i> Save
                 </Button>
                 <Button
                   variant="primary ms-1"
                   type="button"
                   onClick={() => props.history.push("/users")}
                 >
-                  Cancel
+                  <i className="fa fa-undo"></i> Cancel
                 </Button>
               </div>
             </Form>
