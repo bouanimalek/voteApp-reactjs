@@ -30,7 +30,7 @@ export default (props) => {
       <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} timeout={1000} /> */}
 
       <Loader
-        type="Oval"
+        type="Grid"
         color="#00BFFF"
         height={80}
         width={80}
