@@ -146,7 +146,7 @@ export default (props) => {
     userData.append("address", user.address);
     userData.append("birthDate", birthdayDate);
     if (authUserRole === "admin") {
-      userData.append("role", role);
+      userData.append("role", user.role);
     }
     if (password !== "") {
       userData.append("password", password);
@@ -226,9 +226,9 @@ export default (props) => {
                     <Form.Control
                       required
                       type="password"
-                      value=""
                       name="password"
-                      onChange={handleInputChange}
+                      autoComplete="on"
+                      onChange={handlePassword}
                     />
                   </Form.Group>
                 </Col>
@@ -305,7 +305,6 @@ export default (props) => {
                                 ? moment(user.birthDate).format("DD/MM/YYYY")
                                 : ""
                             }
-                            name="birthDate"
                             placeholder="dd/mm/yyyy"
                             onFocus={openCalendar}
                             onChange={() => {}}
