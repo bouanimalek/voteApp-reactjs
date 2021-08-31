@@ -17,14 +17,20 @@ import { toast } from "react-toastify";
 
 export default (props) => {
   const [events, setEvents] = useState([]);
-  useEffect(() => {
-    HomeService.getAllEvents()
+
+  const refreshList = () => {
+    EventService.getAllEvents()
       .then((response) => {
+        console.log(response.data);
         setEvents(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    refreshList();
   }, []);
 
   const header = [
@@ -65,16 +71,6 @@ export default (props) => {
       // So the table could sort it by number instead of by string
       return moment(columnValue, "Do MMMM YYYY").valueOf();
     },
-  };
-
-  const refreshList = () => {
-    EventService.getAllEvents()
-      .then((response) => {
-        setEvents(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const handleDelete = (id) => {
