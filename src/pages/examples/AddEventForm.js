@@ -65,23 +65,23 @@ export const AddEventForm = () => {
   const [endDateRequired, setEndDateRequired] = useState("");
   const [tag_Required, setTag_Required] = useState("");
 
-  const startDateTime = new Date(startDate.valueOf()).toLocaleDateString(
-    "fr-CA",
-    {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "numeric",
-      minute: "numeric",
-    }
-  );
-  const endDateTime = new Date(endDate.valueOf()).toLocaleDateString("fr-CA", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "numeric",
-    minute: "numeric",
-  });
+  // const startDateTime = new Date(startDate.valueOf()).toLocaleDateString(
+  //   "fr-CA",
+  //   {
+  //     year: "numeric",
+  //     month: "2-digit",
+  //     day: "2-digit",
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //   }
+  // );
+  // const endDateTime = new Date(endDate.valueOf()).toLocaleDateString("fr-CA", {
+  //   year: "numeric",
+  //   month: "2-digit",
+  //   day: "2-digit",
+  //   hour: "numeric",
+  //   minute: "numeric",
+  // });
 
   const data = new FormData();
   data.append("name", name);
