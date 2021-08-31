@@ -71,16 +71,16 @@ export const AddEventForm = () => {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-      // hour: "numeric",
-      // minute: "numeric",
+      hour: "numeric",
+      minute: "numeric",
     }
   );
   const endDateTime = new Date(endDate.valueOf()).toLocaleDateString("fr-CA", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-    // hour: "numeric",
-    // minute: "numeric",
+    hour: "numeric",
+    minute: "numeric",
   });
 
   const data = new FormData();
@@ -89,8 +89,8 @@ export const AddEventForm = () => {
   data.append("price", price);
   data.append("availableTicketNumber", availableTicketNumber);
   data.append("location", address);
-  data.append("startDateTime", startDateTime);
-  data.append("endDateTime", endDateTime);
+  data.append("startDateTime", startDate.toISOString());
+  data.append("endDateTime", endDate.toISOString());
   data.append("images", image);
   data.append("tags", JSON.stringify(tag_));
   data.append("eventType", eventType);
@@ -169,6 +169,7 @@ export const AddEventForm = () => {
   const handleSave = () => {
     const isValid = validate();
     if (isValid) {
+      console.log(startDate.toISOString());
       EventService.createEvent(data)
         .then((response) => {
           console.log(response.data);
