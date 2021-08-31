@@ -127,7 +127,7 @@ export default () => {
   const data = new FormData();
   data.append("firstname", user ? user.firstname : "");
   data.append("lastname", user ? user.lastname : "");
-  data.append("birthday", birthdayDate);
+  data.append("birthDate", birthdayDate);
   data.append("phone", user ? user.phone : "");
   data.append("email", user ? user.email : "");
   data.append("address", user ? user.address : "");
