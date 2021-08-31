@@ -54,11 +54,11 @@ const EventsShow = () => {
                   <Card.Text>
                     <u>Start Date</u>:
                     {` ${moment(event.startDateTime).format(
-                      "DD/MM/YYYY hh:mm a"
+                      "DD/MM/YYYY HH:mm "
                     )}`}{" "}
                     - <u>End Date</u>:{" "}
                     {` ${moment(event.endDateTime).format(
-                      "DD/MM/YYYY hh:mm a"
+                      "DD/MM/YYYY HH:mm "
                     )}`}
                   </Card.Text>
                   {event.eventType !== "free" ? (
