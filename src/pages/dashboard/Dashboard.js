@@ -26,25 +26,33 @@ export default () => {
   const [events, setEvents] = useState(Number);
   const [tickets, setTickets] = useState(Number);
 
+  let usersPr = 0;
+  let eventsPr = 0;
+  let ticketsPr = 0;
+  let total = users + events + tickets;
+  usersPr = (users / total) * 100;
+  eventsPr = (events / total) * 100;
+  ticketsPr = (tickets / total) * 100;
+
   const trafficShares = [
     {
       id: 1,
       label: "Users",
-      value: users,
+      value: parseInt(usersPr, 10),
       color: "tertiary",
       icon: faUsers,
     },
     {
       id: 2,
       label: "Tickets",
-      value: tickets,
+      value: parseInt(ticketsPr, 10),
       color: "secondary",
       icon: faFilePdf,
     },
     {
       id: 3,
       label: "Events",
-      value: events,
+      value: parseInt(eventsPr, 10),
       color: "primary",
       icon: faListUl,
     },
