@@ -4,8 +4,6 @@ import { Routes } from "../routes";
 
 // pages
 
-import DashboardOverview from "./dashboard/Dashboard";
-
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
 import ForgotPassword from "./examples/ForgotPassword";
@@ -33,6 +31,7 @@ import EditSettings from "./examples/EditSettings";
 import EventsShow from "./examples/EventsShow";
 import EventShowDetails from "./examples/EventShowDetails";
 import Events from "./examples/Events";
+import Dashboard from "./dashboard/Dashboard";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -116,7 +115,7 @@ export default () => (
     <RouteWithSidebar
       exact
       path={Routes.Dashboard.path}
-      component={DashboardOverview}
+      component={Dashboard}
     />
 
     <RouteWithSidebar
