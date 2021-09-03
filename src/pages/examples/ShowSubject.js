@@ -14,15 +14,8 @@ import { CounterWidget, CircleChartWidget } from "../../components/Widgets";
 import SubjectService from "../../services/subject.services";
 import VoteService from "../../services/vote.services";
 import UserService from "../../services/user.services";
-import ReservationService from "../../services/reservation.services";
 import { toast } from "react-toastify";
-import {
-  faCashRegister,
-  faChartLine,
-  faUsers,
-  faFilePdf,
-  faListUl,
-} from "@fortawesome/free-solid-svg-icons";
+import { faYenSign, faNotEqual } from "@fortawesome/free-solid-svg-icons";
 
 const EventShowDetails = () => {
   const { idSubject } = useParams();
@@ -56,41 +49,26 @@ const EventShowDetails = () => {
       label: "Yes",
       value: subject.vote ? subject.vote.yesVote : null,
       color: "tertiary",
-      icon: faUsers,
+      icon: faYenSign,
     },
     {
       id: 2,
       label: "No",
       value: subject.vote ? subject.vote.noVote : null,
       color: "secondary",
-      icon: faFilePdf,
+      icon: faNotEqual,
     },
   ];
-
-  //   const handleReservation = (idEvent) => {
-  //     setIsLoaded(false);
-  //     ReservationService.createReservation(idEvent)
-  //       .then((response) => {
-  //         console.log(response);
-  //         setIsLoaded(true);
-  //         toast.success(
-  //           "Thank you for your resevation! Please check your email!"
-  //         );
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         setIsLoaded(true);
-  //         toast.error("Can not make reservation! Tickets are sold out!");
-  //       });
-  //   };
 
   const handleAddYesVote = (id) => {
     VoteService.addYesVote(id)
       .then((response) => {
         console.log(response.data);
+        toast.success("Vote submitted successfully!");
       })
       .catch((error) => {
         console.log(error);
+        toast.danger("Error!");
       });
   };
   return (

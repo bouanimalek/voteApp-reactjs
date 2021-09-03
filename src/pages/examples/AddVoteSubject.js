@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import moment from "moment-timezone";
-import Datetime from "react-datetime";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import {
   Col,
   Row,
   Card,
-  Image,
   Form,
   Button,
   InputGroup,
 } from "@themesberg/react-bootstrap";
-import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import SubjectService from "../../services/subject.services";
 import { toast } from "react-toastify";
 
@@ -49,7 +43,7 @@ export default (props) => {
           toast.success("Subject created successfully!");
           setTitle("");
           setDescription("");
-          //props.history.push("/subjects");
+          props.history.push("/dashboard");
         })
         .catch((error) => {
           console.log(error);

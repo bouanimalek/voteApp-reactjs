@@ -9,7 +9,6 @@ import {
   Badge,
 } from "@themesberg/react-bootstrap";
 import { useHistory, Link } from "react-router";
-import moment from "moment";
 import "../../../src/test.css";
 import image from "../../assets/img/vote.jpg";
 
