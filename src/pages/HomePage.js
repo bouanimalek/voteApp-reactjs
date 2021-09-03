@@ -32,6 +32,9 @@ import EventsShow from "./examples/EventsShow";
 import EventShowDetails from "./examples/EventShowDetails";
 import Events from "./examples/Events";
 import Dashboard from "./dashboard/Dashboard";
+import AddSubject from "./examples/AddVoteSubject";
+import AddVoteSubject from "./examples/AddVoteSubject";
+import ShowSubject from "./examples/ShowSubject";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -115,7 +118,7 @@ export default () => (
     <RouteWithSidebar
       exact
       path={Routes.Dashboard.path}
-      component={Dashboard}
+      component={EventsShow}
     />
 
     <RouteWithSidebar
@@ -146,6 +149,16 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Tags.path} component={Tags} />
     <RouteWithSidebar exact path={Routes.AddTag.path} component={AddTag} />
     <RouteWithSidebar exact path={Routes.EditTag.path} component={EditTag} />
+    <RouteWithSidebar
+      exact
+      path={Routes.AddSubject.path}
+      component={AddVoteSubject}
+    />
+    <RouteWithSidebar
+      exact
+      path={Routes.ShowSubject.path}
+      component={ShowSubject}
+    />
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>

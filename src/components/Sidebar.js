@@ -13,6 +13,7 @@ import {
   faTags,
   faFilePdf,
   faListUl,
+  faVoteYea,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
@@ -175,35 +176,9 @@ export default (props = {}) => {
                 icon={faChartPie}
               />
               <NavItem
-                title="Events"
-                link={Routes.EventsShow.path}
-                icon={faStream}
-              />
-
-              <NavItem
-                title="Manage Users"
-                icon={faUsers}
-                link={Routes.Users.path}
-              />
-              <NavItem
-                title="Manage Tags"
-                icon={faTags}
-                link={Routes.Tags.path}
-              />
-              <NavItem
-                title="Manage Events"
-                icon={faListUl}
-                link={Routes.Events.path}
-              />
-              <NavItem
-                title="Manage Tickets"
-                icon={faFilePdf}
-                link={Routes.Tickets.path}
-              />
-              <NavItem
-                title="Settings"
-                icon={faCog}
-                link={Routes.EditSettings.path}
+                title="Add Subject"
+                link={Routes.AddSubject.path}
+                icon={faVoteYea}
               />
             </Nav>
           </div>

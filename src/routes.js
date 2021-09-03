@@ -19,4 +19,6 @@ export const Routes = {
   EditTag: { path: "/tags/edit/:idTag" },
   Tickets: { path: "/tickets" },
   EditSettings: { path: "/users/settings" },
+  AddSubject: { path: "/subjects/create" },
+  ShowSubject: { path: "/subjects/show/:idSubject" },
 };

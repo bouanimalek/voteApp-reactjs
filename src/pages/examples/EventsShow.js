@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import HomeService from "../../services/home.services";
+import SubjectService from "../../services/subject.services";
 import {
   Card,
   Button,
@@ -11,15 +11,16 @@ import {
 import { useHistory, Link } from "react-router";
 import moment from "moment";
 import "../../../src/test.css";
+import image from "../../assets/img/vote.jpg";
 
 const EventsShow = () => {
   let history = useHistory();
-  const [events, setEvents] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
-    HomeService.getAllEvents()
+    SubjectService.getAllSubjects()
       .then((response) => {
-        setEvents(response.data);
+        setSubjects(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -27,65 +28,34 @@ const EventsShow = () => {
   }, []);
 
   const handleEvent = (id) => {
-    history.push(`/events/show/${id}`);
+    history.push(`/subjects/show/${id}`);
   };
 
   return (
     <Container className="py-4">
-      <h5 className="mb-4">Evénements En ligne</h5>
+      <h5 className="mb-4">Les Sujets</h5>
       <Row className="g-4">
-        {events.map((event) => {
+        {subjects.map((subject) => {
           return (
-            <Col xs={4} xl={3} key={event._id}>
+            <Col xs={4} xl={3} key={subject._id}>
               <Card
                 style={{ cursor: "pointer" }}
                 border="light"
-                key={event._id}
-                onClick={handleEvent.bind(this, event._id)}
+                key={subject._id}
+                onClick={handleEvent.bind(this, subject._id)}
                 className="test"
               >
-                <Card.Img variant="top" src={event.eventImage} />
+                <Card.Img variant="top" src={image} />
                 <Card.Body>
                   <Card.Title>
-                    <Card.Link onClick={handleEvent.bind(this, event._id)}>
-                      {event.name}
+                    <Card.Link onClick={handleEvent.bind(this, subject._id)}>
+                      {subject.title}
                     </Card.Link>
                   </Card.Title>
-                  <Card.Text>
-                    <u>Start Date</u>:
-                    {` ${moment(event.startDateTime).format(
-                      "DD/MM/YYYY HH:mm "
-                    )}`}{" "}
-                    - <u>End Date</u>:{" "}
-                    {` ${moment(event.endDateTime).format(
-                      "DD/MM/YYYY HH:mm "
-                    )}`}
-                  </Card.Text>
-                  {event.eventType !== "free" ? (
-                    <Card.Text>{event.price} €</Card.Text>
-                  ) : (
-                    <span
-                      style={{ color: "#eb2f06", fontFamily: "sans-serif" }}
-                    >
-                      Free
-                    </span>
-                  )}
+                  <Card.Text>{subject.description}</Card.Text>
 
-                  <Card.Text>
-                    {event.author.firstname} {event.author.lastname}
-                  </Card.Text>
-                  <Card.Text>
-                    {event.tags.map((tag, index) => (
-                      <Badge
-                        pill
-                        bg="info"
-                        key={index}
-                        style={{ margin: "2px" }}
-                      >
-                        {tag.name}
-                      </Badge>
-                    ))}
-                  </Card.Text>
+                  <Card.Text>Yes Votes: {subject.vote.yesVote}</Card.Text>
+                  <Card.Text>No Votes: {subject.vote.noVote}</Card.Text>
                   {/* <Button
                     variant="primary"
                     onClick={handleEvent.bind(this, event._id)}
